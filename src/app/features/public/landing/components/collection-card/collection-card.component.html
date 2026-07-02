@@ -1,6 +1,31 @@
 <article class="collection-card">
-  <p>{{ collection().curator }}</p>
-  <h3>{{ collection().title }}</h3>
-  <span>{{ collection().count }}</span>
-  <small>{{ collection().description }}</small>
+  <div class="collection-card__covers" aria-label="Album covers preview">
+    <img
+      class="collection-card__cover collection-card__cover--large"
+      [src]="collection().coverImagePaths[0]"
+      [alt]="collection().title + ' featured album cover'"
+    />
+
+    <div class="collection-card__cover-stack">
+      @for (coverPath of collection().coverImagePaths.slice(1, 4); track coverPath; let last = $last) {
+        <div class="collection-card__cover-small-wrap">
+          <img
+            class="collection-card__cover collection-card__cover--small"
+            [src]="coverPath"
+            [alt]="collection().title + ' album cover preview'"
+          />
+          @if (last) {
+            <span class="collection-card__badge">{{ collection().extraAlbumCount }}</span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="collection-card__content">
+    <p>{{ collection().curator }}</p>
+    <h3>{{ collection().title }}</h3>
+    <span>{{ collection().count }}</span>
+    <small>{{ collection().description }}</small>
+  </div>
 </article>

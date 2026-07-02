@@ -12,6 +12,8 @@
   --page-pad: clamp(1rem, 4vw, 4rem);
   --shadow-soft: 0 1.5rem 5rem rgba(0, 0, 0, 0.36);
   --shadow-card: 0 1rem 2.5rem rgba(0, 0, 0, 0.22);
+  --shadow-card-hover: 0 1.5rem 3.5rem rgba(0, 0, 0, 0.34);
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
 
@@ -47,4 +49,33 @@ a {
 :focus-visible {
   outline: 3px solid rgba(139, 92, 246, 0.8);
   outline-offset: 3px;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 620ms var(--ease-premium),
+    transform 620ms var(--ease-premium);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+  }
 }

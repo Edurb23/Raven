@@ -1,9 +1,35 @@
 <footer class="site-footer">
-  <app-brand-mark />
-  <p>Music discovery, album reviews and personal collections. Public landing preview.</p>
-  <nav aria-label="Footer navigation">
-    <a routerLink="/login">Log in</a>
-    <a routerLink="/register">Register</a>
-    <a routerLink="/app">Future app</a>
-  </nav>
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <app-brand-mark />
+      <p>Music discovery, reviews and collections for people who care about albums.</p>
+    </div>
+
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      @for (group of footerGroups; track group.title) {
+        <div class="site-footer__group">
+          <h2>{{ group.title }}</h2>
+          <ul>
+            @for (link of group.links; track link.label) {
+              <li>
+                @if (link.route) {
+                  <a [routerLink]="link.route">{{ link.label }}</a>
+                } @else {
+                  <a [href]="link.href">{{ link.label }}</a>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </nav>
+
+    <div class="site-footer__bottom">
+      <p>© 2026 Raven. Music discovery, reviews and collections.</p>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
 </footer>

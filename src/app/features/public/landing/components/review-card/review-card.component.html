@@ -1,8 +1,42 @@
 <article class="review-card">
-  <div class="review-card__meta">
-    <span>{{ review().album }}</span>
-    <strong>{{ review().rating }}</strong>
+  <div class="review-card__album">
+    <img class="review-card__cover" [src]="review().coverImagePath" [alt]="review().albumTitle + ' album cover'" />
+
+    <div class="review-card__album-info">
+      <h3>{{ review().albumTitle }}</h3>
+      <p>{{ review().artistName }}</p>
+      <div class="review-card__rating" aria-label="Rated {{ review().rating }} out of 5">
+        <span aria-hidden="true">★★★★★</span>
+        <strong>{{ review().rating }}</strong>
+      </div>
+    </div>
   </div>
-  <blockquote>{{ review().quote }}</blockquote>
-  <p>{{ review().author }}</p>
+
+  <blockquote>{{ review().text }}</blockquote>
+
+  <div class="review-card__reviewer">
+    <div [class]="'review-card__avatar ' + review().reviewerAvatarClass" aria-hidden="true">
+      {{ review().reviewerInitials }}
+    </div>
+    <div>
+      <p>
+        {{ review().reviewerName }}
+        @if (review().verified) {
+          <span class="review-card__verified">Verified</span>
+        }
+      </p>
+      <small>{{ review().publishedAt }}</small>
+    </div>
+  </div>
+
+  <div class="review-card__engagement" aria-label="Review engagement">
+    <span>♥ {{ review().likeCount }} likes</span>
+    <span>◦ {{ review().commentCount }} comments</span>
+  </div>
+
+  <div class="review-card__tags">
+    @for (tag of review().tags; track tag) {
+      <span>#{{ tag }}</span>
+    }
+  </div>
 </article>

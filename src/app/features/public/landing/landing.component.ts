@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { SectionHeadingComponent } from '../../../shared/components/section-heading/section-heading.component';
+import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
 import { LandingDataService } from '../../../core/services/landing-data.service';
 import { AlbumCardComponent } from './components/album-card/album-card.component';
 import { ArtistCardComponent } from './components/artist-card/artist-card.component';
 import { CollectionCardComponent } from './components/collection-card/collection-card.component';
+import { CommunityStatsComponent } from './components/community-stats/community-stats.component';
 import { HeroSectionComponent } from './components/hero-section/hero-section.component';
 import { ReviewCardComponent } from './components/review-card/review-card.component';
 import { SiteFooterComponent } from './components/site-footer/site-footer.component';
@@ -17,9 +19,11 @@ import { CtaLinkComponent } from '../../../shared/components/cta-link/cta-link.c
     AlbumCardComponent,
     ArtistCardComponent,
     CollectionCardComponent,
+    CommunityStatsComponent,
     CtaLinkComponent,
     HeroSectionComponent,
     ReviewCardComponent,
+    RevealOnScrollDirective,
     SectionHeadingComponent,
     SiteFooterComponent,
     SiteNavComponent
@@ -35,5 +39,6 @@ export class LandingComponent {
   protected readonly trendingAlbums = this.landingData.trendingAlbums;
   protected readonly featuredArtists = this.landingData.featuredArtists;
   protected readonly communityReviews = this.landingData.communityReviews;
+  protected readonly communityStats = this.landingData.communityStats;
   protected readonly userCollections = this.landingData.userCollections;
 }

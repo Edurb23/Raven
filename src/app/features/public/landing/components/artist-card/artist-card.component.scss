@@ -8,24 +8,49 @@
   background: rgba(22, 22, 37, 0.68);
   box-shadow: var(--shadow-card);
   padding: 1rem;
+  transition:
+    box-shadow 250ms ease,
+    transform 250ms var(--ease-premium),
+    border-color 250ms ease;
+}
+
+.artist-card:hover {
+  border-color: rgba(139, 92, 246, 0.38);
+  box-shadow: 0 1.25rem 3rem rgba(37, 99, 235, 0.16);
+  transform: translateX(6px);
+}
+
+.artist-card:hover .artist-card__avatar {
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.42),
+    0 0 2rem rgba(109, 40, 217, 0.34);
 }
 
 .artist-card__avatar {
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 1rem;
+  background-position: center;
+  background-size: cover;
+  transition: box-shadow 250ms ease;
 }
 
-.visual--violet-blue {
-  background: linear-gradient(135deg, #8b5cf6, #2563eb);
+.visual--underscores {
+  background-image:
+    url("/covers/underscores.jpg"),
+    linear-gradient(135deg, #8b5cf6, #2563eb);
 }
 
-.visual--blue-cyan {
-  background: linear-gradient(135deg, #6d28d9, #0ea5e9);
+.visual--beabadoobee {
+  background-image:
+    url("/covers/beabadoobee.jpg"),
+    linear-gradient(135deg, #6d28d9, #0ea5e9);
 }
 
-.visual--orbit {
-  background: linear-gradient(135deg, #1e40af, #7c3aed);
+.visual--gab-ferreira {
+  background-image:
+    url("/covers/gab-ferreira.jpg"),
+    linear-gradient(135deg, #1e40af, #7c3aed);
 }
 
 h3,
@@ -51,5 +76,12 @@ span {
 
   span {
     grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artist-card,
+  .artist-card__avatar {
+    transition: none;
   }
 }

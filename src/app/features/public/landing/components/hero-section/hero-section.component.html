@@ -17,49 +17,47 @@
       <div class="player-demo__device">
         <div class="player-demo__screen">
           <div class="player-demo__cover">
-            <img src="/covers/hero-album.jpg" alt="Anime girl with guitar album cover" />
+            <span class="cover-image cover-image--hero" role="img" aria-label="rosie album cover"></span>
           </div>
           <div class="player-demo__track">
             <small>Now playing</small>
-            <strong>Moonlit Strings</strong>
-            <span>Akira Lane</span>
+            <strong>number one girl</strong>
+            <span>ROSE</span>
           </div>
         </div>
 
         <div class="player-demo__progress"><span></span></div>
 
         <div class="player-demo__controls">
-          <span></span>
-          <button type="button" aria-label="Play preview"></button>
-          <span></span>
+          <button class="player-demo__control player-demo__control--previous" type="button" aria-label="Previous track"></button>
+          <button class="player-demo__control player-demo__control--pause" type="button" aria-label="Pause preview"></button>
+          <button class="player-demo__control player-demo__control--next" type="button" aria-label="Next track"></button>
         </div>
       </div>
 
-      <div class="player-demo__moving-cover">
-        <img src="/covers/hero-album.jpg" alt="" />
-      </div>
+      <div class="player-demo__actions" aria-label="Album actions">
+        <div class="player-demo__reaction player-demo__like">
+          <strong>&hearts;</strong>
+          <span>Liked</span>
+        </div>
 
-      <div class="player-demo__reaction player-demo__like">
-        <strong>&hearts;</strong>
-        <span>Liked</span>
-      </div>
-
-      <div class="player-demo__reaction player-demo__rating">
-        <strong>&#9733;&#9733;&#9733;&#9733;&#9733;</strong>
-        <span>Rated 5.0</span>
+        <div class="player-demo__reaction player-demo__rating">
+          <strong>&#9733;&#9733;&#9733;&#9733;&#9733;</strong>
+          <span>Rated 5.0</span>
+        </div>
       </div>
 
       <div class="player-demo__list">
         <p>Added to Night Finds</p>
         <div class="player-demo__covers">
           <span class="player-demo__list-cover cover cover--anime">
-            <img src="/covers/hero-album.jpg" alt="" />
+            <span class="cover-image cover-image--hero"></span>
           </span>
           <span class="player-demo__list-cover cover cover--rapper">
-            <img src="/covers/rapper-album.jpg" alt="" />
+            <span class="cover-image cover-image--rapper"></span>
           </span>
           <span class="player-demo__list-cover cover cover--band">
-            <img src="/covers/band-album.jpg" alt="" />
+            <span class="cover-image cover-image--band"></span>
           </span>
         </div>
       </div>

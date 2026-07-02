@@ -19,10 +19,29 @@ export interface ArtistPreview {
 }
 
 export interface CommunityReview {
-  readonly author: string;
-  readonly album: string;
+  readonly albumTitle: string;
+  readonly artistName: string;
+  readonly coverImagePath: string;
   readonly rating: string;
-  readonly quote: string;
+  readonly reviewerName: string;
+  readonly reviewerInitials: string;
+  readonly reviewerAvatarClass: string;
+  readonly publishedAt: string;
+  readonly text: string;
+  readonly likeCount: string;
+  readonly commentCount: string;
+  readonly tags: readonly string[];
+  readonly verified: boolean;
+}
+
+export interface CommunityStat {
+  readonly label: string;
+  readonly value: string;
+}
+
+export interface CommunityStats {
+  readonly stats: readonly CommunityStat[];
+  readonly trendingReviews: readonly string[];
 }
 
 export interface UserCollection {
@@ -30,4 +49,6 @@ export interface UserCollection {
   readonly curator: string;
   readonly count: string;
   readonly description: string;
+  readonly coverImagePaths: readonly string[];
+  readonly extraAlbumCount: string;
 }

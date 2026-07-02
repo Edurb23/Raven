@@ -2,6 +2,7 @@
   <app-brand-mark />
 
   <nav class="site-nav__links" aria-label="Primary navigation">
+    <a href="#trending">Discover</a>
     @for (item of navItems(); track item.fragment) {
       <a [href]="'#' + item.fragment">{{ item.label }}</a>
     }

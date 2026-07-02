@@ -1,0 +1,21 @@
+<aside class="community-stats" aria-label="Community today statistics">
+  <p class="community-stats__eyebrow">Community today</p>
+
+  <div class="community-stats__grid">
+    @for (stat of stats().stats; track stat.label; let index = $index) {
+      <div class="community-stats__item" [style.animation-delay.ms]="index * 90">
+        <strong>{{ stat.value }}</strong>
+        <span>{{ stat.label }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="community-stats__trending">
+    <p>Trending reviews</p>
+    <div>
+      @for (review of stats().trendingReviews; track review) {
+        <span>{{ review }}</span>
+      }
+    </div>
+  </div>
+</aside>
