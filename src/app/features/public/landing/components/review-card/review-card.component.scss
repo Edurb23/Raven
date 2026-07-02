@@ -1,0 +1,39 @@
+.review-card {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid rgba(46, 46, 69, 0.82);
+  border-radius: 1.35rem;
+  background: rgba(22, 22, 37, 0.68);
+  box-shadow: var(--shadow-card);
+  padding: 1.2rem;
+}
+
+.review-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.review-card__meta span {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.review-card__meta strong {
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  padding: 0.35rem 0.65rem;
+}
+
+blockquote {
+  color: var(--text-primary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+p {
+  color: var(--text-secondary);
+  margin: 0;
+}

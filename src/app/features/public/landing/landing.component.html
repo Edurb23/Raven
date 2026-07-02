@@ -1,0 +1,74 @@
+<app-site-nav [navItems]="navItems" />
+
+<main>
+  <app-hero-section />
+
+  <section class="landing-section" id="trending">
+    <app-section-heading
+      eyebrow="Trending albums"
+      title="Discover the records people cannot stop saving."
+      description="Follow new releases, compare moods and start shaping the album collection that will follow you into the real app."
+    />
+
+    <div class="album-grid">
+      @for (album of trendingAlbums; track album.title) {
+        <app-album-card [album]="album" />
+      }
+    </div>
+  </section>
+
+  <section class="landing-section landing-section--split" id="artists">
+    <app-section-heading
+      eyebrow="Featured artists"
+      title="Find voices before they become obvious."
+      description="Raven is designed for discovery first, with artists, albums and community context flowing into the same collection space."
+    />
+
+    <div class="artist-stack">
+      @for (artist of featuredArtists; track artist.name) {
+        <app-artist-card [artist]="artist" />
+      }
+    </div>
+  </section>
+
+  <section class="landing-section" id="reviews">
+    <app-section-heading
+      eyebrow="Community reviews"
+      title="Read the signal behind the rating."
+      description="Short, useful reviews help every album feel connected to taste, memory and repeated listening."
+    />
+
+    <div class="review-grid">
+      @for (review of communityReviews; track review.author + review.album) {
+        <app-review-card [review]="review" />
+      }
+    </div>
+  </section>
+
+  <section class="landing-section" id="collections">
+    <app-section-heading
+      eyebrow="User collections"
+      title="Build lists for every version of your listening life."
+      description="After login, collections will become personal spaces for favorite albums, reviews and themed lists."
+    />
+
+    <div class="collection-grid">
+      @for (collection of userCollections; track collection.title) {
+        <app-collection-card [collection]="collection" />
+      }
+    </div>
+  </section>
+
+  <section class="final-cta" aria-labelledby="final-cta-title">
+    <div>
+      <p class="final-cta__eyebrow">Ready when you are</p>
+      <h2 id="final-cta-title">Start collecting the albums that define your year.</h2>
+    </div>
+    <div class="final-cta__actions">
+      <app-cta-link label="Start your collection" route="/register" />
+      <app-cta-link label="Explore albums" route="/" variant="secondary" />
+    </div>
+  </section>
+</main>
+
+<app-site-footer />

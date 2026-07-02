@@ -1,0 +1,14 @@
+<header class="site-nav">
+  <app-brand-mark />
+
+  <nav class="site-nav__links" aria-label="Primary navigation">
+    @for (item of navItems(); track item.fragment) {
+      <a [href]="'#' + item.fragment">{{ item.label }}</a>
+    }
+  </nav>
+
+  <div class="site-nav__actions">
+    <a class="site-nav__login" routerLink="/login">Log in</a>
+    <a class="site-nav__signup" routerLink="/register">Join Raven</a>
+  </div>
+</header>

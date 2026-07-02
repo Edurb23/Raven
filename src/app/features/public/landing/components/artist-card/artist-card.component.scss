@@ -1,0 +1,55 @@
+.artist-card {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+  grid-template-columns: auto 1fr auto;
+  border: 1px solid rgba(46, 46, 69, 0.82);
+  border-radius: 1.25rem;
+  background: rgba(22, 22, 37, 0.68);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+}
+
+.artist-card__avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+}
+
+.visual--violet-blue {
+  background: linear-gradient(135deg, #8b5cf6, #2563eb);
+}
+
+.visual--blue-cyan {
+  background: linear-gradient(135deg, #6d28d9, #0ea5e9);
+}
+
+.visual--orbit {
+  background: linear-gradient(135deg, #1e40af, #7c3aed);
+}
+
+h3,
+p {
+  margin: 0;
+}
+
+h3 {
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+p,
+span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 420px) {
+  .artist-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  span {
+    grid-column: 2;
+  }
+}

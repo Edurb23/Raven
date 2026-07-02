@@ -1,0 +1,68 @@
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__content">
+    <p class="hero__eyebrow">Public beta for album collectors</p>
+    <h1 id="hero-title">Raven</h1>
+    <p class="hero__copy">
+      Discover music news, create personal lists, review albums and join the community around your
+      favorite artists and bands.
+    </p>
+    <div class="hero__actions">
+      <app-cta-link label="Start your collection" route="/register" />
+      <app-cta-link label="Explore albums" route="/" variant="secondary" />
+    </div>
+  </div>
+
+  <div class="hero__visual" aria-label="MP3 player interaction preview">
+    <div class="player-demo" aria-hidden="true">
+      <div class="player-demo__device">
+        <div class="player-demo__screen">
+          <div class="player-demo__cover">
+            <img src="/covers/hero-album.jpg" alt="Anime girl with guitar album cover" />
+          </div>
+          <div class="player-demo__track">
+            <small>Now playing</small>
+            <strong>Moonlit Strings</strong>
+            <span>Akira Lane</span>
+          </div>
+        </div>
+
+        <div class="player-demo__progress"><span></span></div>
+
+        <div class="player-demo__controls">
+          <span></span>
+          <button type="button" aria-label="Play preview"></button>
+          <span></span>
+        </div>
+      </div>
+
+      <div class="player-demo__moving-cover">
+        <img src="/covers/hero-album.jpg" alt="" />
+      </div>
+
+      <div class="player-demo__reaction player-demo__like">
+        <strong>&hearts;</strong>
+        <span>Liked</span>
+      </div>
+
+      <div class="player-demo__reaction player-demo__rating">
+        <strong>&#9733;&#9733;&#9733;&#9733;&#9733;</strong>
+        <span>Rated 5.0</span>
+      </div>
+
+      <div class="player-demo__list">
+        <p>Added to Night Finds</p>
+        <div class="player-demo__covers">
+          <span class="player-demo__list-cover cover cover--anime">
+            <img src="/covers/hero-album.jpg" alt="" />
+          </span>
+          <span class="player-demo__list-cover cover cover--rapper">
+            <img src="/covers/rapper-album.jpg" alt="" />
+          </span>
+          <span class="player-demo__list-cover cover cover--band">
+            <img src="/covers/band-album.jpg" alt="" />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

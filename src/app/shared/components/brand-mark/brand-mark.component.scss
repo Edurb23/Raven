@@ -1,0 +1,11 @@
+.brand {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+
+.brand__name {
+  font-size: 1.15rem;
+  font-weight: 800;
+}

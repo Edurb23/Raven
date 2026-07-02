@@ -1,0 +1,12 @@
+<article class="album-card">
+  <div
+    [class]="'album-card__cover ' + album().visualClass"
+    role="img"
+    [attr.aria-label]="album().alt"
+  ></div>
+  <div class="album-card__content">
+    <p>{{ album().mood }}</p>
+    <h3>{{ album().title }}</h3>
+    <span>{{ album().artist }}</span>
+  </div>
+</article>

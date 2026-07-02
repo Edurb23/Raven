@@ -1,0 +1,31 @@
+.collection-card {
+  display: grid;
+  gap: 0.8rem;
+  min-height: 14rem;
+  border: 1px solid rgba(46, 46, 69, 0.82);
+  border-radius: 1.35rem;
+  background:
+    linear-gradient(145deg, rgba(109, 40, 217, 0.2), rgba(37, 99, 235, 0.08)),
+    rgba(22, 22, 37, 0.68);
+  box-shadow: var(--shadow-card);
+  padding: 1.25rem;
+}
+
+p,
+small {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+h3 {
+  color: var(--text-primary);
+  font-size: 1.35rem;
+  margin: 0;
+}
+
+span {
+  align-self: end;
+  color: var(--accent);
+  font-weight: 800;
+}

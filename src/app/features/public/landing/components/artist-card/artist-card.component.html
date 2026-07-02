@@ -1,0 +1,8 @@
+<article class="artist-card">
+  <div [class]="'artist-card__avatar ' + artist().visualClass" aria-hidden="true"></div>
+  <div>
+    <h3>{{ artist().name }}</h3>
+    <p>{{ artist().genre }}</p>
+  </div>
+  <span>{{ artist().listeners }}</span>
+</article>
