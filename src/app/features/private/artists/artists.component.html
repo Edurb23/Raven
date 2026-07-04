@@ -1,0 +1,25 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="artists-shell">
+  <app-home-top-bar />
+
+  <section class="artists-hero" appRevealOnScroll>
+    <div>
+      <p>Discovery</p>
+      <h1>Artists</h1>
+      <span>Explore artists, discover discographies and build your collection.</span>
+    </div>
+
+    <app-artist-search-bar [value]="searchQuery()" (valueChange)="updateSearch($event)" />
+  </section>
+
+  <section class="artists-content" appRevealOnScroll>
+    <app-genre-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectTab($any($event))" />
+
+    <app-artist-grid
+      [artists]="filteredArtists()"
+      [azMode]="selectedTab() === 'A-Z'"
+      [groupedArtists]="groupedArtists()"
+    />
+  </section>
+</main>

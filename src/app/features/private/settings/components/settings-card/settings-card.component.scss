@@ -1,0 +1,123 @@
+.setting-card {
+  display: grid;
+  gap: 1rem;
+  border-radius: 1rem;
+  background: rgba(11, 11, 18, 0.26);
+  padding: 1rem;
+}
+
+h3,
+p {
+  margin: 0;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+.setting-card__control {
+  display: flex;
+  justify-content: flex-start;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  padding: 0.7rem 1rem;
+}
+
+a {
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  font-weight: 900;
+  padding: 0.7rem 1rem;
+  text-decoration: none;
+}
+
+.danger {
+  background: rgba(248, 113, 113, 0.14);
+  color: #fecaca;
+}
+
+.radio-group,
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.radio-group label,
+.chip-group button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  background: rgba(22, 22, 37, 0.52);
+  color: var(--text-secondary);
+  padding: 0.55rem 0.75rem;
+}
+
+.chip-group__chip--active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+  color: var(--text-primary) !important;
+}
+
+.mini-cards,
+.setting-list {
+  display: grid;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.mini-cards article {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: 0.85rem;
+  background: rgba(22, 22, 37, 0.55);
+  padding: 0.75rem;
+}
+
+.mini-cards span {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.setting-list {
+  color: var(--text-secondary);
+  margin: 0;
+  padding: 0;
+}
+
+.setting-list li {
+  list-style: none;
+  border-radius: 0.75rem;
+  background: rgba(22, 22, 37, 0.5);
+  padding: 0.65rem 0.75rem;
+}
+
+input {
+  accent-color: var(--accent);
+}
+
+@media (min-width: 760px) {
+  .setting-card {
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.48fr);
+  }
+
+  .setting-card__control {
+    justify-content: flex-end;
+  }
+}

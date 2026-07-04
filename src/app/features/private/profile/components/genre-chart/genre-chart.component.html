@@ -1,0 +1,11 @@
+<section class="panel">
+  <h2>Genre Distribution</h2>
+  <div class="chart">
+    @for (genre of genres(); track genre.genre) {
+      <div class="row">
+        <span>{{ genre.genre }}</span>
+        <div><i [style.width.%]="genre.value"></i></div>
+      </div>
+    }
+  </div>
+</section>

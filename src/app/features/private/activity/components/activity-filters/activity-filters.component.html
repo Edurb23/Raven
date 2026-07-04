@@ -1,0 +1,13 @@
+<div class="filters" role="tablist" aria-label="Activity filters">
+  @for (filter of filters(); track filter) {
+    <button
+      type="button"
+      role="tab"
+      [attr.aria-selected]="selected() === filter"
+      [class.filters__button--active]="selected() === filter"
+      (click)="selectedChange.emit(filter)"
+    >
+      {{ filter }}
+    </button>
+  }
+</div>

@@ -1,0 +1,7 @@
+<nav class="tabs" aria-label="Profile sections">
+  @for (tab of tabs(); track tab) {
+    <button type="button" [class.tabs__button--active]="selected() === tab" (click)="selectedChange.emit(tab)">
+      {{ tab }}
+    </button>
+  }
+</nav>

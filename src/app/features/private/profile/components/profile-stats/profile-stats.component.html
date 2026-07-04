@@ -1,0 +1,8 @@
+<div class="profile-stats">
+  @for (stat of stats(); track stat.label) {
+    <article>
+      <strong>{{ stat.value }}</strong>
+      <span>{{ stat.label }}</span>
+    </article>
+  }
+</div>

@@ -1,0 +1,51 @@
+<article class="collection-card">
+  <app-collection-cover-collage [covers]="collection().covers" [title]="collection().title" />
+
+  <div class="collection-card__body">
+    <header>
+      <div>
+        <h3>{{ collection().title }}</h3>
+        <p>{{ collection().albumCount }} albums</p>
+      </div>
+      @if (collection().visibility) {
+        <span class="badge">{{ collection().visibility }}</span>
+      }
+      @if (collection().trending) {
+        <span class="badge badge--trend">Trending</span>
+      }
+    </header>
+
+    @if (collection().creator) {
+      <div class="creator">
+        <img [src]="collection().creator?.avatar" [alt]="collection().creator?.name + ' avatar'" />
+        <span>{{ collection().creator?.name }}</span>
+      </div>
+    }
+
+    <p class="description">{{ collection().description }}</p>
+
+    <footer>
+      <div class="meta">
+        @if (collection().lastUpdated) {
+          <span>{{ collection().lastUpdated }}</span>
+        }
+        @if (collection().likes) {
+          <span>{{ collection().likes }} likes</span>
+        }
+        @if (collection().comments) {
+          <span>{{ collection().comments }} comments</span>
+        }
+      </div>
+
+      @if (collection().category === 'owned') {
+        <button type="button">Manage</button>
+      }
+    </footer>
+
+    <div class="tags">
+      @for (tag of collection().tags.slice(0, 3); track tag) {
+        <span>{{ tag }}</span>
+      }
+    </div>
+  </div>
+</article>

@@ -1,0 +1,26 @@
+@if (artists().length === 0) {
+  <section class="empty-state">
+    <div aria-hidden="true">♪</div>
+    <h2>No artists found.</h2>
+    <p>Try another genre or search for a different artist.</p>
+  </section>
+} @else if (azMode()) {
+  <div class="az-list">
+    @for (group of groupedArtists(); track group.letter) {
+      <section class="az-group">
+        <h2>{{ group.letter }}</h2>
+        <div class="artist-grid">
+          @for (artist of group.artists; track artist.name) {
+            <app-catalog-artist-card [artist]="artist" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="artist-grid">
+    @for (artist of artists(); track artist.name) {
+      <app-catalog-artist-card [artist]="artist" />
+    }
+  </div>
+}

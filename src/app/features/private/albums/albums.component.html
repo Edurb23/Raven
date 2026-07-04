@@ -1,0 +1,25 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="albums-shell">
+  <app-home-top-bar />
+
+  <section class="albums-hero" appRevealOnScroll>
+    <div>
+      <p>Catalog</p>
+      <h1>Albums</h1>
+      <span>Discover and organize albums from every genre.</span>
+    </div>
+
+    <app-album-search-bar [value]="searchQuery()" (valueChange)="updateSearch($event)" />
+  </section>
+
+  <section class="albums-content" appRevealOnScroll>
+    <app-genre-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectTab($any($event))" />
+
+    <app-album-grid
+      [albums]="filteredAlbums()"
+      [azMode]="selectedTab() === 'A-Z'"
+      [groupedAlbums]="groupedAlbums()"
+    />
+  </section>
+</main>

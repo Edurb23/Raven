@@ -1,0 +1,38 @@
+.filters {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.1rem 0 0.7rem;
+  scrollbar-width: thin;
+}
+
+button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(22, 22, 37, 0.58);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 850;
+  padding: 0.65rem 1rem;
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    color 220ms ease,
+    transform 220ms var(--ease-premium);
+}
+
+button:hover,
+button:focus-visible {
+  background: rgba(109, 40, 217, 0.14);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.filters__button--active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0.9rem 2rem rgba(109, 40, 217, 0.22);
+  color: var(--text-primary);
+}

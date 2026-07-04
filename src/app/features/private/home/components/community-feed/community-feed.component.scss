@@ -1,0 +1,52 @@
+.feed {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.feed-item {
+  position: relative;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem 0 0.7rem 1.4rem;
+}
+
+.feed-item::before {
+  position: absolute;
+  top: 1.4rem;
+  bottom: -0.35rem;
+  left: 0.32rem;
+  width: 1px;
+  content: "";
+  background: rgba(148, 163, 184, 0.14);
+}
+
+.feed-item:last-child::before {
+  display: none;
+}
+
+.feed-item__dot {
+  position: absolute;
+  top: 0.95rem;
+  left: 0;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 1.2rem rgba(139, 92, 246, 0.58);
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+strong,
+b {
+  color: var(--text-primary);
+}
+
+time {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}

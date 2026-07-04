@@ -1,0 +1,44 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="profile-shell">
+  <app-home-top-bar />
+
+  <app-profile-header [user]="data.user" appRevealOnScroll />
+  <app-profile-stats [stats]="data.stats" appRevealOnScroll />
+  <app-profile-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectTab($event)" appRevealOnScroll />
+
+  <section class="profile-quote" appRevealOnScroll>
+    <p>"{{ data.user.quote }}"</p>
+    <span>Personal profile quote</span>
+  </section>
+
+  @if (selectedTab() === 'Overview') {
+    <div class="profile-grid" appRevealOnScroll>
+      <app-favorite-artists [artists]="data.favoriteArtists" />
+      <app-favorite-albums [albums]="data.favoriteAlbums" />
+      <app-collection-dna [items]="data.dna" />
+      <app-genre-chart [genres]="data.genreDistribution" />
+      <app-recent-reviews [reviews]="data.recentReviews" />
+      <app-profile-collections-grid [collections]="data.collections" />
+      <app-activity-timeline [activity]="data.activity" />
+      <section class="achievements">
+        <h2>Achievements</h2>
+        <div>
+          @for (achievement of data.achievements; track achievement.title) {
+            <app-achievement-card [achievement]="achievement" />
+          }
+        </div>
+      </section>
+    </div>
+  } @else if (selectedTab() === 'Statistics') {
+    <app-statistics-dashboard [charts]="data.charts" appRevealOnScroll />
+  } @else if (selectedTab() === 'Reviews') {
+    <app-recent-reviews [reviews]="data.recentReviews" appRevealOnScroll />
+  } @else if (selectedTab() === 'Collections') {
+    <app-profile-collections-grid [collections]="data.collections" appRevealOnScroll />
+  } @else if (selectedTab() === 'Activity') {
+    <app-activity-timeline [activity]="data.activity" appRevealOnScroll />
+  } @else {
+    <app-favorite-albums [albums]="data.favoriteAlbums" appRevealOnScroll />
+  }
+</main>

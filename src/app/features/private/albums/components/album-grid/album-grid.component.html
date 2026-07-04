@@ -1,0 +1,26 @@
+@if (albums().length === 0) {
+  <section class="empty-state">
+    <div aria-hidden="true">♪</div>
+    <h2>No albums found.</h2>
+    <p>Try another genre or search for a different record.</p>
+  </section>
+} @else if (azMode()) {
+  <div class="az-list">
+    @for (group of groupedAlbums(); track group.letter) {
+      <section class="az-group">
+        <h2>{{ group.letter }}</h2>
+        <div class="album-grid">
+          @for (album of group.albums; track album.title + album.artist) {
+            <app-catalog-album-card [album]="album" />
+          }
+        </div>
+      </section>
+    }
+  </div>
+} @else {
+  <div class="album-grid">
+    @for (album of albums(); track album.title + album.artist) {
+      <app-catalog-album-card [album]="album" />
+    }
+  </div>
+}

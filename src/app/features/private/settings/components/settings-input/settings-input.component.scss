@@ -1,0 +1,17 @@
+input,
+textarea {
+  width: min(100%, 22rem);
+  border: 0;
+  border-radius: 0.8rem;
+  background: rgba(11, 11, 18, 0.46);
+  color: var(--text-primary);
+  font: inherit;
+  padding: 0.75rem 0.85rem;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.13);
+  outline: 0;
+}

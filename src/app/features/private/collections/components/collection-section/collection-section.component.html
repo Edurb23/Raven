@@ -1,0 +1,14 @@
+@if (collections().length > 0) {
+  <section class="collection-section">
+    <header>
+      <p>{{ title() }}</p>
+      <h2>{{ description() }}</h2>
+    </header>
+
+    <div class="collection-grid">
+      @for (collection of collections(); track collection.id) {
+        <app-collection-card [collection]="collection" />
+      }
+    </div>
+  </section>
+}

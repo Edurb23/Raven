@@ -1,0 +1,39 @@
+.collection-section {
+  display: grid;
+  gap: 1.25rem;
+}
+
+header p,
+header h2 {
+  margin: 0;
+}
+
+header p {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+header h2 {
+  margin-top: 0.35rem;
+  font-size: clamp(1.25rem, 3vw, 1.65rem);
+}
+
+.collection-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .collection-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,41 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+h2 {
+  margin: 0;
+}
+
+.artist-row {
+  display: grid;
+  grid-auto-columns: 10rem;
+  grid-auto-flow: column;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+article {
+  display: grid;
+  gap: 0.45rem;
+  border-radius: 1.1rem;
+  background: rgba(22, 22, 37, 0.48);
+  padding: 0.7rem;
+  transition: transform 220ms var(--ease-premium);
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.9rem;
+  object-fit: cover;
+}
+
+span {
+  color: var(--text-secondary);
+}

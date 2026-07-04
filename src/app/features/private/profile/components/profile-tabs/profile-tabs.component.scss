@@ -1,0 +1,24 @@
+.tabs {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(22, 22, 37, 0.58);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 0.65rem 1rem;
+}
+
+.tabs__button--active {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0.9rem 2rem rgba(109, 40, 217, 0.22);
+  color: var(--text-primary);
+}

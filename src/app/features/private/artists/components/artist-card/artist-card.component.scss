@@ -1,0 +1,128 @@
+.artist-card {
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+  animation: artistIn 520ms var(--ease-premium) both;
+  transition:
+    filter 240ms ease,
+    transform 240ms var(--ease-premium);
+}
+
+.artist-card:hover {
+  filter: drop-shadow(0 1.3rem 2.8rem rgba(109, 40, 217, 0.2));
+  transform: translateY(-7px);
+}
+
+.artist-card__image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.15rem;
+  background: var(--surface);
+}
+
+img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 280ms var(--ease-premium);
+}
+
+.artist-card:hover img {
+  transform: scale(1.05);
+}
+
+.artist-card__hover {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  border-radius: 0.9rem;
+  background: rgba(11, 11, 18, 0.78);
+  opacity: 0;
+  padding: 0.7rem;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 220ms ease,
+    transform 220ms var(--ease-premium);
+  backdrop-filter: blur(14px);
+}
+
+.artist-card:hover .artist-card__hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.artist-card__hover span {
+  color: var(--accent);
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.artist-card__hover strong {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.artist-card__body,
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+h3,
+p {
+  margin: 0;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p,
+footer {
+  color: var(--text-secondary);
+}
+
+button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.55rem 0.8rem;
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms var(--ease-premium);
+}
+
+button:hover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0.9rem 2rem rgba(109, 40, 217, 0.2);
+  transform: translateY(-1px);
+}
+
+footer {
+  font-size: 0.84rem;
+}
+
+@keyframes artistIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

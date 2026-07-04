@@ -1,0 +1,12 @@
+<section class="panel">
+  <h2>Collection DNA</h2>
+  <div class="dna-grid">
+    @for (item of items(); track item.label) {
+      <article>
+        <span>{{ item.icon }}</span>
+        <small>{{ item.label }}</small>
+        <strong>{{ item.value }}</strong>
+      </article>
+    }
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<div class="tabs" role="tablist" aria-label="Album genres">
+  @for (tab of tabs(); track tab) {
+    <button
+      type="button"
+      role="tab"
+      [attr.aria-selected]="selected() === tab"
+      [class.tabs__button--active]="selected() === tab"
+      (click)="selectedChange.emit(tab)"
+    >
+      {{ tab }}
+    </button>
+  }
+</div>

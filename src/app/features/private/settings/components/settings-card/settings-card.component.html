@@ -1,0 +1,68 @@
+<article class="setting-card">
+  <div>
+    <h3>{{ item().label }}</h3>
+    <p>{{ item().description }}</p>
+  </div>
+
+  <div class="setting-card__control">
+    @switch (item().type) {
+      @case ('input') {
+        <app-settings-input [value]="item().value" [placeholder]="item().placeholder || ''" />
+      }
+      @case ('textarea') {
+        <app-settings-input [value]="item().value" [placeholder]="item().placeholder || ''" [textarea]="true" />
+      }
+      @case ('select') {
+        <app-settings-select [value]="item().value" [options]="item().options || []" />
+      }
+      @case ('multi-select') {
+        <div class="chip-group">
+          @for (option of item().options || []; track option.value) {
+            <button type="button" [class.chip-group__chip--active]="$any(item().value || '').includes(option.value)">
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      }
+      @case ('switch') {
+        <app-settings-switch [checked]="$any(item().value)" [label]="item().label" />
+      }
+      @case ('radio') {
+        <div class="radio-group">
+          @for (option of item().options || []; track option.value) {
+            <label>
+              <input type="radio" [name]="item().id" [checked]="item().value === option.value" />
+              <span>{{ option.label }}</span>
+            </label>
+          }
+        </div>
+      }
+      @case ('danger') {
+        <button class="danger" type="button">{{ item().label }}</button>
+      }
+      @case ('cards') {
+        <div class="mini-cards">
+          @for (entry of item().entries || []; track entry.value) {
+            <article>
+              <strong>{{ entry.label.split(' - ')[0] }}</strong>
+              <span>{{ entry.label.split(' - ')[1] || entry.value }}</span>
+            </article>
+          }
+        </div>
+      }
+      @case ('list') {
+        <ul class="setting-list">
+          @for (entry of item().entries || []; track entry.value) {
+            <li>{{ entry.label }}</li>
+          }
+        </ul>
+      }
+      @case ('link') {
+        <a href="/app/settings">{{ item().value }}</a>
+      }
+      @default {
+        <button type="button">{{ item().label }}</button>
+      }
+    }
+  </div>
+</article>

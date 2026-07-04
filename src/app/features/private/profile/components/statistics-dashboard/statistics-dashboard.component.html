@@ -1,0 +1,17 @@
+<section class="stats-dashboard">
+  @for (chart of charts(); track chart.title) {
+    <article>
+      <h2>{{ chart.title }}</h2>
+      <div class="bars">
+        @for (point of chart.points; track $index) {
+          <span [style.height.%]="point"></span>
+        }
+      </div>
+      <div class="labels">
+        @for (label of chart.labels; track label) {
+          <small>{{ label }}</small>
+        }
+      </div>
+    </article>
+  }
+</section>

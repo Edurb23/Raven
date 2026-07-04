@@ -1,0 +1,5 @@
+<nav class="settings-nav" aria-label="Settings categories">
+  @for (section of sections(); track section.id) {
+    <a [href]="'#' + section.id">{{ section.title }}</a>
+  }
+</nav>

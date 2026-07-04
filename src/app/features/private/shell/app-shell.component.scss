@@ -1,30 +1,96 @@
-.placeholder {
-  display: grid;
+:host {
+  display: block;
   min-height: 100dvh;
-  place-items: center;
-  background: var(--background);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(109, 40, 217, 0.22), transparent 28rem),
+    radial-gradient(circle at 88% 12%, rgba(37, 99, 235, 0.16), transparent 24rem),
+    var(--background);
   color: var(--text-primary);
-  padding: 2rem;
-  text-align: center;
 }
 
-a {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: var(--text-primary);
-  font-weight: 800;
-  text-decoration: none;
+.home-shell {
+  width: 100%;
+  max-width: 96rem;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 6rem;
 }
 
-p {
+.home-grid {
+  display: grid;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+.home-grid__main,
+.home-grid__side,
+.artist-list,
+.review-stack {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.home-section {
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+  margin-bottom: 3rem;
+}
+
+.home-section--compact {
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 1.25rem;
+  background: rgba(22, 22, 37, 0.42);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 0;
+  padding: 1.25rem;
+}
+
+.section-heading p,
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-heading p {
   color: var(--accent);
-  font-weight: 800;
-  margin: 0 0 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 900;
   text-transform: uppercase;
 }
 
-h1 {
-  font-size: clamp(2rem, 8vw, 4rem);
-  margin: 0;
+.section-heading h2 {
+  margin-top: 0.3rem;
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  line-height: 1.18;
+}
+
+@media (min-width: 920px) {
+  .home-shell {
+    width: calc(100% - 7.75rem);
+    margin-left: 7.75rem;
+    padding: 1.5rem 2rem 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home-grid {
+    align-items: start;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+}
+
+@media (min-width: 1200px) and (min-height: 760px) {
+  .home-grid__side {
+    position: sticky;
+    top: 6.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .home-shell {
+    padding: 1rem 1rem 6rem;
+  }
 }

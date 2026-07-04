@@ -1,0 +1,48 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.collections {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+article {
+  display: grid;
+  gap: 0.6rem;
+  border-radius: 1.1rem;
+  background: rgba(22, 22, 37, 0.48);
+  padding: 0.75rem;
+}
+
+.covers {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+p,
+span {
+  color: var(--text-secondary);
+}
+
+@media (min-width: 760px) {
+  .collections {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

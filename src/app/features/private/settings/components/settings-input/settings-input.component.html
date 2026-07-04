@@ -1,0 +1,5 @@
+@if (textarea()) {
+  <textarea [value]="value()" [placeholder]="placeholder()" rows="3"></textarea>
+} @else {
+  <input type="text" [value]="value()" [placeholder]="placeholder()" />
+}

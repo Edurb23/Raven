@@ -1,0 +1,8 @@
+<div class="collage">
+  <img class="collage__main" [src]="covers()[0]" [alt]="title() + ' main album cover'" />
+  <div class="collage__stack">
+    @for (cover of covers().slice(1, 4); track cover) {
+      <img [src]="cover" [alt]="title() + ' album cover preview'" />
+    }
+  </div>
+</div>

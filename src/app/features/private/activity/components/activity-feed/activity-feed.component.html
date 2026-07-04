@@ -1,0 +1,13 @@
+@if (activities().length === 0) {
+  <section class="empty-state">
+    <div aria-hidden="true">♪</div>
+    <h2>Nothing new yet.</h2>
+    <p>Follow collectors and artists to make your Raven feed come alive.</p>
+  </section>
+} @else {
+  <div class="timeline">
+    @for (activity of activities(); track activity.id) {
+      <app-activity-card [activity]="activity" />
+    }
+  </div>
+}

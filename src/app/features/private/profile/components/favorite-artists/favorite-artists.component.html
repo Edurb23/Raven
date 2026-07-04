@@ -1,0 +1,12 @@
+<section class="panel">
+  <h2>Favorite Artists</h2>
+  <div class="artist-row">
+    @for (artist of artists(); track artist.name) {
+      <article>
+        <img [src]="artist.image" [alt]="artist.name + ' artist photo'" />
+        <strong>{{ artist.name }}</strong>
+        <span>{{ artist.genre }}</span>
+      </article>
+    }
+  </div>
+</section>

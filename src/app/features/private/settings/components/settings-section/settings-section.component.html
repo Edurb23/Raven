@@ -1,0 +1,15 @@
+<details class="settings-section" [id]="section().id" open>
+  <summary>
+    <div>
+      <h2>{{ section().title }}</h2>
+      <p>{{ section().description }}</p>
+    </div>
+    <span aria-hidden="true">⌄</span>
+  </summary>
+
+  <div class="settings-section__items">
+    @for (item of section().items; track item.id) {
+      <app-settings-card [item]="item" />
+    }
+  </div>
+</details>

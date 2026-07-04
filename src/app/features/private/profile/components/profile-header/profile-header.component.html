@@ -1,0 +1,17 @@
+<section class="profile-header">
+  <img [src]="user().avatar" [alt]="user().name + ' profile photo'" />
+  <div class="profile-header__content">
+    <p>{{ user().username }}</p>
+    <h1>{{ user().name }}</h1>
+    <span>{{ user().bio }}</span>
+    <div class="profile-header__meta">
+      <small>{{ user().memberSince }}</small>
+      <small>{{ user().country }}</small>
+    </div>
+  </div>
+  <div class="profile-header__actions">
+    <button type="button">Edit Profile</button>
+    <button type="button">Share Profile</button>
+    <button type="button">Follow</button>
+  </div>
+</section>

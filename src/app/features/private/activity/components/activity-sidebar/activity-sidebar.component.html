@@ -1,0 +1,20 @@
+<aside class="activity-sidebar" aria-label="Activity widgets">
+  @for (widget of widgetEntries(); track widget.title) {
+    <section class="widget">
+      <h2>{{ widget.title }}</h2>
+      <div class="widget__list">
+        @for (item of widget.items; track item.title + item.subtitle) {
+          <article>
+            @if (item.image) {
+              <img [src]="item.image" [alt]="item.title + ' image'" />
+            }
+            <div>
+              <strong>{{ item.title }}</strong>
+              <span>{{ item.subtitle }}</span>
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</aside>

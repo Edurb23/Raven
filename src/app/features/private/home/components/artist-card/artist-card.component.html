@@ -1,0 +1,9 @@
+<article class="artist">
+  <img [src]="artist().image" [alt]="artist().name + ' artist photo'" />
+  <div>
+    <h3>{{ artist().name }}</h3>
+    <p>{{ artist().genre }}</p>
+    <span>{{ artist().followers }} collectors</span>
+  </div>
+  <button type="button">Follow</button>
+</article>

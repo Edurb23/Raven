@@ -1,0 +1,59 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.album-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+article {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  transition: transform 220ms var(--ease-premium);
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+h3 {
+  font-size: 0.95rem;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+span {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  border-radius: 999px;
+  background: rgba(11, 11, 18, 0.74);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.35rem 0.55rem;
+}
+
+@media (min-width: 760px) {
+  .album-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,13 @@
+<section class="panel">
+  <h2>Favorite Albums</h2>
+  <div class="album-grid">
+    @for (album of albums(); track album.title) {
+      <article>
+        <img [src]="album.cover" [alt]="album.title + ' album cover'" />
+        <h3>{{ album.title }}</h3>
+        <p>{{ album.artist }}</p>
+        <span>{{ album.rating.toFixed(1) }}</span>
+      </article>
+    }
+  </div>
+</section>

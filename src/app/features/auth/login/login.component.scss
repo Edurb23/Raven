@@ -1,30 +1,245 @@
-.placeholder {
+.auth-page {
+  position: relative;
   display: grid;
+  width: 100vw;
   min-height: 100dvh;
   place-items: center;
-  background: var(--background);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(109, 40, 217, 0.34), transparent 26rem),
+    radial-gradient(circle at 78% 74%, rgba(37, 99, 235, 0.18), transparent 24rem),
+    var(--background);
   color: var(--text-primary);
+  padding: 1rem;
+}
+
+.auth-brand {
+  position: absolute;
+  z-index: 4;
+  top: 1.5rem;
+  left: clamp(1rem, 3vw, 2rem);
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.auth-shell {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.auth-card {
+  position: relative;
+  z-index: 3;
+  width: min(100%, 23rem);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 1.35rem;
+  background: rgba(22, 22, 37, 0.8);
+  box-shadow:
+    0 1.5rem 4rem rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(248, 250, 252, 0.05);
+  backdrop-filter: blur(22px);
+}
+
+.auth-card__content {
+  display: grid;
+  gap: 1rem;
   padding: 2rem;
-  text-align: center;
+}
+
+.auth-card__eyebrow {
+  color: var(--accent);
+  font-size: 1.35rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+label span {
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+input {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 0.55rem;
+  background: rgba(11, 11, 18, 0.66);
+  color: var(--text-primary);
+  font: inherit;
+  padding: 0.78rem 0.85rem;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+input:focus {
+  border-color: rgba(139, 92, 246, 0.72);
+  box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.18);
+  outline: 0;
+}
+
+.auth-form__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.auth-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.auth-check input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent);
 }
 
 a {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  color: var(--text-primary);
+  color: var(--accent);
   font-weight: 800;
   text-decoration: none;
 }
 
-p {
-  color: var(--accent);
-  font-weight: 800;
-  margin: 0 0 0.75rem;
-  text-transform: uppercase;
+button {
+  min-height: 2.9rem;
+  border: 0;
+  border-radius: 0.55rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 1rem 2.5rem rgba(37, 99, 235, 0.22);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  transition:
+    box-shadow 220ms ease,
+    transform 220ms var(--ease-premium);
 }
 
-h1 {
-  font-size: clamp(2rem, 8vw, 4rem);
+button:hover,
+button:focus-visible {
+  box-shadow: 0 1.2rem 3rem rgba(109, 40, 217, 0.32);
+  transform: translateY(-1px);
+}
+
+.auth-switch {
+  color: var(--text-secondary);
+  line-height: 1.5;
   margin: 0;
+}
+
+.auth-vinyl-field {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.auth-vinyl {
+  position: absolute;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.12;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  animation:
+    authVinylFloat 9s ease-in-out infinite alternate,
+    authVinylSpin 90s linear infinite;
+  will-change: transform, opacity;
+}
+
+.auth-vinyl--one {
+  width: clamp(16rem, 24vw, 22rem);
+  left: max(-7rem, 8vw);
+  bottom: 11%;
+  opacity: 0.15;
+  filter: blur(1px);
+  animation-duration: 10s, 108s;
+}
+
+.auth-vinyl--two {
+  width: clamp(8rem, 13vw, 12rem);
+  top: 14%;
+  right: 25%;
+  opacity: 0.1;
+  animation-duration: 8s, 84s;
+  animation-delay: -3s, -18s;
+}
+
+.auth-vinyl--three {
+  width: clamp(7rem, 11vw, 10rem);
+  right: 13%;
+  bottom: 12%;
+  opacity: 0.13;
+  animation-duration: 9s, 76s;
+  animation-delay: -5s, -28s;
+}
+
+.auth-vinyl--four {
+  width: clamp(13rem, 20vw, 19rem);
+  top: -7rem;
+  left: 43%;
+  opacity: 0.07;
+  filter: blur(3px);
+  animation-duration: 12s, 120s;
+  animation-delay: -6s, -40s;
+}
+
+@keyframes authVinylFloat {
+  from {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 5px, 0);
+  }
+}
+
+@keyframes authVinylSpin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (max-width: 800px) {
+  .auth-vinyl--one {
+    left: -7rem;
+    bottom: 12%;
+  }
+
+  .auth-vinyl--two,
+  .auth-vinyl--four {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-vinyl {
+    animation: none;
+  }
 }

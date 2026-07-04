@@ -1,0 +1,17 @@
+<section class="welcome">
+  <div class="welcome__copy">
+    <p>Dashboard</p>
+    <h1>Welcome back, Eduardo.</h1>
+    <span>Discover something worth collecting today.</span>
+  </div>
+
+  <div class="stats">
+    @for (stat of stats(); track stat.label) {
+      <article class="stat-card">
+        <strong>{{ stat.value }}</strong>
+        <span>{{ stat.label }}</span>
+        <small>{{ stat.detail }}</small>
+      </article>
+    }
+  </div>
+</section>

@@ -1,0 +1,19 @@
+<section class="panel">
+  <h2>Recent Reviews</h2>
+  <div class="reviews">
+    @for (review of reviews(); track review.album) {
+      <article>
+        <img [src]="review.cover" [alt]="review.album + ' album cover'" />
+        <div>
+          <header>
+            <strong>{{ review.album }}</strong>
+            <span>{{ review.rating.toFixed(1) }}</span>
+          </header>
+          <p>{{ review.artist }}</p>
+          <blockquote>{{ review.text }}</blockquote>
+          <footer>{{ review.date }} · {{ review.likes }} likes · {{ review.comments }} comments</footer>
+        </div>
+      </article>
+    }
+  </div>
+</section>

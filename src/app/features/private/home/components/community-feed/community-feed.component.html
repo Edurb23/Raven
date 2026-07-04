@@ -1,0 +1,9 @@
+<div class="feed">
+  @for (item of activity(); track item.user + item.target) {
+    <article class="feed-item">
+      <span class="feed-item__dot" aria-hidden="true"></span>
+      <p><strong>{{ item.user }}</strong> {{ item.action }} <b>{{ item.target }}</b></p>
+      <time>{{ item.time }}</time>
+    </article>
+  }
+</div>

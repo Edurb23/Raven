@@ -1,0 +1,126 @@
+.collection-card {
+  display: grid;
+  gap: 1rem;
+  border-radius: 1.3rem;
+  background: rgba(22, 22, 37, 0.5);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms var(--ease-premium);
+}
+
+.collection-card:hover {
+  box-shadow: 0 1.4rem 3rem rgba(109, 40, 217, 0.18);
+  transform: translateY(-6px);
+}
+
+.collection-card__body {
+  display: grid;
+  gap: 0.75rem;
+}
+
+header,
+footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+h3,
+p {
+  margin: 0;
+}
+
+h3 {
+  display: -webkit-box;
+  min-height: 2.5em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+header p,
+.description,
+.meta,
+.creator {
+  color: var(--text-secondary);
+}
+
+.description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.55;
+}
+
+.badge {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.35rem 0.55rem;
+}
+
+.badge--trend {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.creator {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+}
+
+.creator img {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+}
+
+button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 0.55rem 0.8rem;
+}
+
+button:hover {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tags span {
+  border-radius: 999px;
+  background: rgba(11, 11, 18, 0.38);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 0.35rem 0.55rem;
+}

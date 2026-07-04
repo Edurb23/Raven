@@ -1,0 +1,22 @@
+<article class="artist-card">
+  <div class="artist-card__image">
+    <img [src]="artist().image" [alt]="artist().name + ' artist photo'" />
+    <div class="artist-card__hover">
+      <span>Latest</span>
+      <strong>{{ artist().latestRelease }}</strong>
+    </div>
+  </div>
+
+  <div class="artist-card__body">
+    <div>
+      <h3>{{ artist().name }}</h3>
+      <p>{{ artist().genre }}</p>
+    </div>
+    <button type="button">Follow</button>
+  </div>
+
+  <footer>
+    <span>{{ artist().albumCount }} albums</span>
+    <span>{{ artist().followers }} followers</span>
+  </footer>
+</article>

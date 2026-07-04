@@ -1,0 +1,47 @@
+.settings-section {
+  scroll-margin-top: 1.5rem;
+  border-radius: 1.35rem;
+  background: rgba(22, 22, 37, 0.46);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+h2,
+p {
+  margin: 0;
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 0.35rem;
+}
+
+summary span {
+  color: var(--accent);
+  font-weight: 900;
+  transition: transform 180ms ease;
+}
+
+details[open] summary span {
+  transform: rotate(180deg);
+}
+
+.settings-section__items {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}

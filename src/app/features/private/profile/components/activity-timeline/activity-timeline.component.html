@@ -1,0 +1,12 @@
+<section class="panel">
+  <h2>Recent Activity</h2>
+  <div class="timeline">
+    @for (item of activity(); track item.action + item.target) {
+      <article>
+        <i aria-hidden="true"></i>
+        <p><strong>{{ item.action }}</strong> {{ item.target }}</p>
+        <time>{{ item.time }}</time>
+      </article>
+    }
+  </div>
+</section>

@@ -1,0 +1,62 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="collections-shell">
+  <app-home-top-bar />
+
+  <section class="collections-hero" appRevealOnScroll>
+    <div>
+      <p>Community shelves</p>
+      <h1>Collections</h1>
+      <span>Build, discover and follow album collections from the Raven community.</span>
+    </div>
+
+    <app-collection-search-bar [value]="searchQuery()" (valueChange)="updateSearch($event)" />
+  </section>
+
+  <section class="collections-content" appRevealOnScroll>
+    <app-collection-filters
+      [filters]="filters"
+      [selected]="selectedFilter()"
+      (selectedChange)="selectFilter($event)"
+    />
+
+    @if (filteredCollections().length === 0) {
+      <section class="empty-state">
+        <div aria-hidden="true">♪</div>
+        <h2>No collections found.</h2>
+        <p>Try another filter or search for a different shelf.</p>
+      </section>
+    } @else if (selectedFilter() === 'A-Z') {
+      <div class="az-list">
+        @for (group of groupedCollections(); track group.letter) {
+          <section class="az-group">
+            <h2>{{ group.letter }}</h2>
+            <div class="az-grid">
+              @for (collection of group.collections; track collection.id) {
+                <app-collection-card [collection]="collection" />
+              }
+            </div>
+          </section>
+        }
+      </div>
+    } @else {
+      <app-collection-section
+        title="Your Collections"
+        description="Private shelves and public lists you are building."
+        [collections]="yourCollections()"
+      />
+
+      <app-collection-section
+        title="Collections You Liked"
+        description="Community shelves saved for later listening."
+        [collections]="likedCollections()"
+      />
+
+      <app-collection-section
+        title="Hype Collections"
+        description="Trending public lists moving through Raven right now."
+        [collections]="hypeCollections()"
+      />
+    }
+  </section>
+</main>

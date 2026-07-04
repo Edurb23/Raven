@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(109, 40, 217, 0.18), transparent 28rem),
+    radial-gradient(circle at 86% 14%, rgba(37, 99, 235, 0.12), transparent 24rem),
+    var(--background);
+  color: var(--text-primary);
+}
+
+.activity-shell {
+  width: 100%;
+  max-width: 96rem;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 6rem;
+}
+
+.activity-hero {
+  display: grid;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(109, 40, 217, 0.17), transparent 18rem),
+    rgba(22, 22, 37, 0.3);
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+}
+
+.activity-hero p,
+.activity-hero h1 {
+  margin: 0;
+}
+
+.activity-hero p {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.activity-hero h1 {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 0.95;
+}
+
+.activity-hero span {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.activity-layout {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.activity-layout__feed,
+.activity-layout__side {
+  min-width: 0;
+}
+
+@media (min-width: 920px) {
+  .activity-shell {
+    width: calc(100% - 7.75rem);
+    margin-left: 7.75rem;
+    padding: 1.5rem 2rem 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .activity-layout {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+
+  .activity-layout__side {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .activity-shell {
+    padding: 1rem 1rem 6rem;
+  }
+}

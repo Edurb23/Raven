@@ -1,0 +1,64 @@
+<article class="activity-card">
+  <div class="activity-card__rail">
+    <img class="avatar" [src]="activity().user.avatar" [alt]="activity().user.name + ' avatar'" />
+    <span class="activity-icon" aria-hidden="true">{{ iconFor(activity().type) }}</span>
+  </div>
+
+  <div class="activity-card__content">
+    <header>
+      <div>
+        <strong>{{ activity().user.name }}</strong>
+        <span>{{ activity().user.username }}</span>
+      </div>
+      <time>{{ activity().createdAt }}</time>
+    </header>
+
+    <p class="activity-description">
+      {{ activity().description }}
+      <b>{{ activity().target.title }}</b>
+      @if (activity().target.subtitle) {
+        <span>{{ activity().target.subtitle }}</span>
+      }
+    </p>
+
+    @if (activity().metadata.rating) {
+      <div class="rating">
+        <span>★★★★★</span>
+        <strong>{{ activity().metadata.rating }}</strong>
+      </div>
+    }
+
+    @if (activity().metadata.quote) {
+      <blockquote>{{ activity().metadata.quote }}</blockquote>
+    }
+
+    @if (activity().image || activity().target.image) {
+      <div class="activity-media">
+        <img [src]="activity().image || activity().target.image" [alt]="activity().target.title + ' artwork'" />
+        <div>
+          <strong>{{ activity().target.title }}</strong>
+          @if (activity().target.subtitle) {
+            <span>{{ activity().target.subtitle }}</span>
+          }
+          @if (activity().metadata.count) {
+            <small>{{ activity().metadata.count }}</small>
+          }
+          @if (activity().metadata.context) {
+            <small>{{ activity().metadata.context }}</small>
+          }
+        </div>
+      </div>
+    }
+
+    <footer>
+      <button type="button">Like</button>
+      <button type="button">Comment</button>
+      @if (activity().metadata.likes) {
+        <span>{{ activity().metadata.likes }} likes</span>
+      }
+      @if (activity().metadata.comments) {
+        <span>{{ activity().metadata.comments }} comments</span>
+      }
+    </footer>
+  </div>
+</article>

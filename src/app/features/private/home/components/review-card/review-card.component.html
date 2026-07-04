@@ -1,0 +1,26 @@
+<article class="review">
+  <img class="review__cover" [src]="review().cover" [alt]="review().album + ' album cover'" />
+
+  <div class="review__body">
+    <div class="review__header">
+      <div>
+        <h3>{{ review().album }}</h3>
+        <p>{{ review().artist }}</p>
+      </div>
+      <span class="rating">***** {{ review().rating }}</span>
+    </div>
+
+    <p class="review__text">{{ review().text }}</p>
+
+    <footer>
+      <div class="reviewer">
+        <img [src]="review().reviewerAvatar" [alt]="review().reviewer + ' avatar'" />
+        <span>{{ review().reviewer }}</span>
+      </div>
+      <div class="review__meta">
+        <span>{{ review().likes }} likes</span>
+        <span>{{ review().comments }} comments</span>
+      </div>
+    </footer>
+  </div>
+</article>

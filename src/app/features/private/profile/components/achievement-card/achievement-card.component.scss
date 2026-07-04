@@ -1,0 +1,28 @@
+article {
+  display: grid;
+  gap: 0.45rem;
+  border-radius: 1.1rem;
+  background: rgba(22, 22, 37, 0.48);
+  padding: 1rem;
+  transition: transform 220ms var(--ease-premium);
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+span {
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-items: center;
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  font-weight: 900;
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}

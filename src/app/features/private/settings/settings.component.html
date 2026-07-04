@@ -1,0 +1,21 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="settings-shell">
+  <app-home-top-bar />
+
+  <section class="settings-hero" appRevealOnScroll>
+    <p>Preferences</p>
+    <h1>Settings</h1>
+    <span>Manage your Raven account, privacy, content and discovery experience.</span>
+  </section>
+
+  <div class="settings-layout">
+    <app-settings-sidebar [sections]="sections" appRevealOnScroll />
+
+    <div class="settings-content">
+      @for (section of sections; track section.id) {
+        <app-settings-section [section]="section" />
+      }
+    </div>
+  </div>
+</main>

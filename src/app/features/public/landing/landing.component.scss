@@ -43,6 +43,92 @@ main {
   overflow: hidden;
 }
 
+.vinyl-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vinyl {
+  position: absolute;
+  display: block;
+  width: 10rem;
+  height: auto;
+  opacity: 0.1;
+  transform: translate3d(0, 0, 0);
+  animation:
+    vinylFloat 9s ease-in-out infinite alternate,
+    vinylSpin 94s linear infinite;
+  will-change: transform, opacity;
+}
+
+.vinyl--one {
+  top: 8rem;
+  left: -8rem;
+  width: clamp(14rem, 22vw, 20rem);
+  opacity: 0.08;
+  filter: blur(2px);
+  animation-duration: 10s, 118s;
+}
+
+.vinyl--two {
+  top: 11rem;
+  right: 7vw;
+  width: clamp(7.5rem, 12vw, 11rem);
+  opacity: 0.12;
+  animation-duration: 8s, 82s;
+  animation-delay: -2s, -18s;
+}
+
+.vinyl--three {
+  top: 38rem;
+  right: -8rem;
+  width: clamp(15rem, 24vw, 22rem);
+  opacity: 0.07;
+  filter: blur(3px);
+  animation-duration: 12s, 124s;
+  animation-delay: -5s, -35s;
+}
+
+.vinyl--four {
+  top: 61rem;
+  left: 10vw;
+  width: clamp(4rem, 8vw, 5.5rem);
+  opacity: 0.16;
+  animation-duration: 7s, 68s;
+  animation-delay: -1s, -12s;
+}
+
+.vinyl--five {
+  top: 91rem;
+  right: 16vw;
+  width: clamp(8rem, 13vw, 12rem);
+  opacity: 0.11;
+  animation-duration: 9s, 96s;
+  animation-delay: -4s, -28s;
+}
+
+.vinyl--six {
+  top: 126rem;
+  left: -4rem;
+  width: clamp(12rem, 18vw, 18rem);
+  opacity: 0.09;
+  filter: blur(1.5px);
+  animation-duration: 11s, 108s;
+  animation-delay: -6s, -42s;
+}
+
+.vinyl--seven {
+  bottom: 7rem;
+  right: -3rem;
+  width: clamp(4.5rem, 8vw, 6rem);
+  opacity: 0.15;
+  animation-duration: 8s, 74s;
+  animation-delay: -3s, -22s;
+}
+
 .landing-section {
   position: relative;
   display: grid;
@@ -196,6 +282,26 @@ main {
   }
 }
 
+@keyframes vinylFloat {
+  from {
+    transform: translate3d(0, -3px, 0);
+  }
+
+  to {
+    transform: translate3d(0, 5px, 0);
+  }
+}
+
+@keyframes vinylSpin {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
 @media (min-width: 680px) {
   .album-grid,
   .review-grid,
@@ -243,7 +349,8 @@ main {
 @media (prefers-reduced-motion: reduce) {
   :host::before,
   :host::after,
-  .landing-section--motion::before {
+  .landing-section--motion::before,
+  .vinyl {
     animation: none;
   }
 }

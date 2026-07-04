@@ -1,0 +1,17 @@
+<section class="panel">
+  <h2>Collections</h2>
+  <div class="collections">
+    @for (collection of collections(); track collection.title) {
+      <article>
+        <div class="covers">
+          @for (cover of collection.covers; track cover) {
+            <img [src]="cover" [alt]="collection.title + ' cover preview'" />
+          }
+        </div>
+        <h3>{{ collection.title }}</h3>
+        <p>{{ collection.albumCount }} albums · {{ collection.likes }} likes</p>
+        <span>{{ collection.updatedAt }}</span>
+      </article>
+    }
+  </div>
+</section>

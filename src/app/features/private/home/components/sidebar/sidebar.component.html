@@ -1,0 +1,42 @@
+<aside class="sidebar" aria-label="Raven app navigation">
+  <div class="sidebar__content">
+    <nav class="sidebar__nav" aria-label="Primary navigation">
+      @for (item of mainItems(); track item.label) {
+        <a class="sidebar__link" [class.sidebar__link--active]="item.active" [routerLink]="item.route">
+          <span class="sidebar__indicator" aria-hidden="true"></span>
+          <span class="sidebar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path [attr.d]="item.iconPath" />
+            </svg>
+          </span>
+          <span class="sidebar__label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <nav class="sidebar__nav sidebar__nav--bottom" aria-label="Account navigation">
+      @for (item of bottomItems(); track item.label) {
+        <a class="sidebar__link" [class.sidebar__link--active]="item.active" [routerLink]="item.route">
+          <span class="sidebar__indicator" aria-hidden="true"></span>
+          <span class="sidebar__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path [attr.d]="item.iconPath" />
+            </svg>
+          </span>
+          <span class="sidebar__label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </div>
+</aside>
+
+<nav class="mobile-nav" aria-label="Raven mobile navigation">
+  @for (item of items().slice(0, 5); track item.label) {
+    <a class="mobile-nav__link" [class.mobile-nav__link--active]="item.active" [routerLink]="item.route">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="item.iconPath" />
+      </svg>
+      <span>{{ item.label }}</span>
+    </a>
+  }
+</nav>

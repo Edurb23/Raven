@@ -1,0 +1,88 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(109, 40, 217, 0.18), transparent 28rem),
+    radial-gradient(circle at 86% 14%, rgba(37, 99, 235, 0.12), transparent 24rem),
+    var(--background);
+  color: var(--text-primary);
+}
+
+.settings-shell {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 96rem;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 6rem;
+}
+
+.settings-hero {
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(109, 40, 217, 0.17), transparent 18rem),
+    rgba(22, 22, 37, 0.3);
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+}
+
+.settings-hero p,
+.settings-hero h1 {
+  margin: 0;
+}
+
+.settings-hero p {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.settings-hero h1 {
+  font-size: clamp(2.4rem, 7vw, 5rem);
+  line-height: 0.95;
+  margin-top: 0.35rem;
+}
+
+.settings-hero span {
+  color: var(--text-secondary);
+  display: block;
+  line-height: 1.7;
+  margin-top: 0.85rem;
+}
+
+.settings-layout {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+
+.settings-content {
+  display: grid;
+  gap: 1.2rem;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 920px) {
+  .settings-shell {
+    width: calc(100% - 7.75rem);
+    margin-left: 7.75rem;
+    padding: 1.5rem 2rem 3rem;
+  }
+}
+
+@media (min-width: 1180px) {
+  .settings-layout {
+    align-items: start;
+    grid-template-columns: 260px minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (max-width: 680px) {
+  .settings-shell {
+    padding: 1rem 1rem 6rem;
+  }
+}

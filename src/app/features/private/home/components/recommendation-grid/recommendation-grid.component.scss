@@ -1,0 +1,44 @@
+.recommendations {
+  display: grid;
+  gap: 1rem;
+}
+
+.recommendation {
+  display: grid;
+  align-items: center;
+  gap: 0.9rem;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  border-radius: 1rem;
+  background: rgba(22, 22, 37, 0.58);
+  padding: 0.7rem;
+  transition:
+    box-shadow 240ms ease,
+    transform 240ms var(--ease-premium);
+}
+
+.recommendation:hover {
+  box-shadow: 0 1.2rem 2.5rem rgba(37, 99, 235, 0.15);
+  transform: translateY(-5px);
+}
+
+img {
+  width: 4.5rem;
+  aspect-ratio: 1;
+  border-radius: 0.8rem;
+  object-fit: cover;
+}
+
+h3,
+p {
+  margin: 0;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p,
+span {
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}

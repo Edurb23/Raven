@@ -1,0 +1,12 @@
+<div class="recommendations">
+  @for (album of albums(); track album.title) {
+    <article class="recommendation">
+      <img [src]="album.cover" [alt]="album.title + ' album cover'" />
+      <div>
+        <h3>{{ album.title }}</h3>
+        <p>{{ album.artist }}</p>
+        <span>{{ album.meta }}</span>
+      </div>
+    </article>
+  }
+</div>

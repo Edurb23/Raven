@@ -1,0 +1,26 @@
+<app-home-sidebar [items]="navigation" />
+
+<main class="activity-shell">
+  <app-home-top-bar />
+
+  <section class="activity-hero" appRevealOnScroll>
+    <p>Community</p>
+    <h1>Activity</h1>
+    <span>See what your friends and favorite artists have been doing.</span>
+  </section>
+
+  <app-activity-filters
+    [filters]="filters"
+    [selected]="selectedFilter()"
+    (selectedChange)="selectFilter($event)"
+    appRevealOnScroll
+  />
+
+  <div class="activity-layout">
+    <section class="activity-layout__feed" appRevealOnScroll>
+      <app-activity-feed [activities]="filteredActivities()" />
+    </section>
+
+    <app-activity-sidebar class="activity-layout__side" [widgets]="widgets" appRevealOnScroll />
+  </div>
+</main>

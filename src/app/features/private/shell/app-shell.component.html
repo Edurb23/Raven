@@ -1,7 +1,69 @@
-<main class="placeholder">
-  <a routerLink="/" aria-label="Back to Raven landing">Raven</a>
-  <section>
-    <p>Private route prepared</p>
-    <h1>The full music app will live here.</h1>
-  </section>
+<app-home-sidebar [items]="navigation" />
+
+<main class="home-shell">
+  <app-home-top-bar />
+
+  <app-welcome-banner [stats]="data.stats" appRevealOnScroll />
+
+  <div class="home-grid">
+    <div class="home-grid__main">
+      <section class="home-section" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Continue Collecting</p>
+          <h2>Recently opened records</h2>
+        </div>
+        <app-album-carousel [albums]="data.continueCollecting" />
+      </section>
+
+      <section class="home-section" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Trending Reviews</p>
+          <h2>What collectors are debating</h2>
+        </div>
+        <div class="review-stack">
+          @for (review of data.trendingReviews; track review.album) {
+            <app-home-review-card [review]="review" />
+          }
+        </div>
+      </section>
+
+      <section class="home-section" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Recommended For You</p>
+          <h2>Albums that match your shelf</h2>
+        </div>
+        <app-recommendation-grid [albums]="data.recommendations" />
+      </section>
+    </div>
+
+    <aside class="home-grid__side" aria-label="Raven community overview">
+      <section class="home-section home-section--compact" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Popular Albums</p>
+          <h2>Most saved today</h2>
+        </div>
+        <app-popular-albums [albums]="data.popularAlbums" />
+      </section>
+
+      <section class="home-section home-section--compact" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Discover Artists</p>
+          <h2>People to follow</h2>
+        </div>
+        <div class="artist-list">
+          @for (artist of data.artists; track artist.name) {
+            <app-home-artist-card [artist]="artist" />
+          }
+        </div>
+      </section>
+
+      <section class="home-section home-section--compact" appRevealOnScroll>
+        <div class="section-heading">
+          <p>Community Activity</p>
+          <h2>Live from Raven</h2>
+        </div>
+        <app-community-feed [activity]="data.activity" />
+      </section>
+    </aside>
+  </div>
 </main>
