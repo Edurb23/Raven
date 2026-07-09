@@ -129,16 +129,76 @@ button {
     transform 220ms var(--ease-premium);
 }
 
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.68;
+  transform: none;
+}
+
 button:hover,
 button:focus-visible {
   box-shadow: 0 1.2rem 3rem rgba(109, 40, 217, 0.32);
   transform: translateY(-1px);
 }
 
+button:disabled:hover {
+  box-shadow: 0 1rem 2.5rem rgba(37, 99, 235, 0.22);
+  transform: none;
+}
+
 .auth-switch {
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
+}
+
+.auth-toast {
+  position: fixed;
+  z-index: 20;
+  top: 1.25rem;
+  right: 1.25rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  width: min(22rem, calc(100vw - 2rem));
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 0.95rem;
+  background: rgba(22, 22, 37, 0.92);
+  box-shadow: 0 1.4rem 4rem rgba(0, 0, 0, 0.38);
+  color: var(--text-primary);
+  padding: 0.85rem 0.9rem;
+  backdrop-filter: blur(18px);
+  animation: authToastIn 220ms ease both;
+}
+
+.auth-toast span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+}
+
+.auth-toast p {
+  line-height: 1.45;
+  margin: 0;
+}
+
+.auth-toast--success {
+  border-color: rgba(34, 197, 94, 0.28);
+}
+
+.auth-toast--success span {
+  background: #22c55e;
+  box-shadow: 0 0 1.2rem rgba(34, 197, 94, 0.45);
+}
+
+.auth-toast--error {
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+.auth-toast--error span {
+  background: #ef4444;
+  box-shadow: 0 0 1.2rem rgba(239, 68, 68, 0.45);
 }
 
 .auth-vinyl-field {
@@ -220,6 +280,18 @@ button:focus-visible {
   }
 }
 
+@keyframes authToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 800px) {
   .auth-vinyl--one {
     left: -7rem;
@@ -232,8 +304,21 @@ button:focus-visible {
   }
 }
 
+@media (max-width: 560px) {
+  .auth-toast {
+    top: 0.75rem;
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .auth-vinyl {
+    animation: none;
+  }
+
+  .auth-toast {
     animation: none;
   }
 }

@@ -34,7 +34,13 @@
           <span>I agree to Raven's future terms and community guidelines.</span>
         </label>
 
-        <button type="submit">Create account</button>
+        <button type="submit" [disabled]="isSubmitting()">
+          @if (isSubmitting()) {
+            Creating account...
+          } @else {
+            Create account
+          }
+        </button>
       </form>
 
       <p class="auth-switch">
@@ -44,4 +50,17 @@
     </div>
     </section>
   </section>
+
+  @if (toastMessage()) {
+    <aside
+      class="auth-toast"
+      [class.auth-toast--success]="toastType() === 'success'"
+      [class.auth-toast--error]="toastType() === 'error'"
+      role="status"
+      aria-live="polite"
+    >
+      <span aria-hidden="true"></span>
+      <p>{{ toastMessage() }}</p>
+    </aside>
+  }
 </main>
