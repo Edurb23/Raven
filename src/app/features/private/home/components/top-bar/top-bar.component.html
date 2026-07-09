@@ -9,11 +9,51 @@
   </label>
 
   <div class="top-bar__actions">
-    <button type="button" aria-label="Notifications">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-8 4h4" />
-      </svg>
-    </button>
+    <div class="notifications">
+      <button
+        class="notifications__trigger"
+        type="button"
+        aria-label="Notifications"
+        aria-haspopup="dialog"
+        [attr.aria-expanded]="notificationsOpen()"
+        (click)="toggleNotifications()"
+      >
+        <span class="notifications__count" aria-label="{{ notificationCountLabel() }} unread notifications">
+          {{ notificationCountLabel() }}
+        </span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2Zm-8 4h4" />
+        </svg>
+      </button>
+
+      @if (notificationsOpen()) {
+        <section class="notifications__dropdown" role="dialog" aria-label="Recent notifications">
+          <header class="notifications__header">
+            <div>
+              <p>Notifications</p>
+              <h2>Recent activity <span>{{ notificationCountLabel() }}</span></h2>
+            </div>
+            <button type="button" aria-label="Close notifications" (click)="closeNotifications()">x</button>
+          </header>
+
+          <div class="notifications__list">
+            @for (notification of notifications; track notification.title) {
+              <button type="button" class="notifications__item" (click)="closeNotifications()">
+                <span class="notifications__badge">{{ notification.type }}</span>
+                <strong>{{ notification.title }}</strong>
+                <small>{{ notification.description }}</small>
+                <time>{{ notification.time }}</time>
+              </button>
+            }
+          </div>
+
+          <footer class="notifications__footer">
+            <button type="button">Mark all as read</button>
+          </footer>
+        </section>
+      }
+    </div>
+
     <a class="avatar" href="/app" aria-label="Open profile">E</a>
   </div>
 </header>
