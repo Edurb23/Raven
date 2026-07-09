@@ -23,6 +23,17 @@ export interface AlbumReview {
   date: string;
 }
 
+export interface AlbumFeaturedArtist {
+  name: string;
+  role: string;
+  image: string;
+}
+
+export interface AlbumExternalLink {
+  label: string;
+  url: string;
+}
+
 export interface RelatedAlbum {
   title: string;
   artist: string;
@@ -47,7 +58,9 @@ export interface AlbumDetails {
   reviewCount: string;
   savedCount: string;
   description: string;
-  featuredArtists: string[];
+  featuredArtists: AlbumFeaturedArtist[];
+  listenPlatforms: AlbumExternalLink[];
+  shopLinks: AlbumExternalLink[];
   tracks: AlbumTrack[];
   credits: AlbumCredit[];
   reviews: AlbumReview[];

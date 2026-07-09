@@ -55,6 +55,70 @@ dd {
   font-size: 1.1rem;
 }
 
+.side-card--actions {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.side-card--actions button,
+.side-card--actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 999px;
+  background: rgba(11, 11, 18, 0.36);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  padding: 0.72rem 0.9rem;
+  text-decoration: none;
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.side-card--actions button {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.side-card--actions button:hover,
+.side-card--actions a:hover {
+  border-color: rgba(139, 92, 246, 0.42);
+  box-shadow: 0 14px 30px rgba(109, 40, 217, 0.18);
+  transform: translateY(-2px);
+}
+
+.side-card--actions > span {
+  font-size: 0.9rem;
+}
+
+.feature-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.feature-list article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: center;
+  border-radius: 0.85rem;
+  background: rgba(11, 11, 18, 0.24);
+  padding: 0.5rem;
+}
+
+.feature-list img {
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border-radius: 0.7rem;
+  object-fit: cover;
+}
+
+.feature-list strong {
+  display: block;
+}
+
 .chip-row {
   display: flex;
   flex-wrap: wrap;

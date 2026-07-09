@@ -9,8 +9,8 @@
     <article class="about-card">
       <p>Featuring</p>
       <div class="chip-row">
-        @for (artist of album().featuredArtists; track artist) {
-          <span>{{ artist }}</span>
+        @for (artist of album().featuredArtists; track artist.name) {
+          <span>{{ artist.name }}</span>
         }
       </div>
     </article>

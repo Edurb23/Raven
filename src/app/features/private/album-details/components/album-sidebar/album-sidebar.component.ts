@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { AlbumDetails } from '../../models/album-details.models';
 
 @Component({
@@ -9,4 +9,5 @@ import { AlbumDetails } from '../../models/album-details.models';
 })
 export class AlbumSidebarComponent {
   readonly album = input.required<AlbumDetails>();
+  readonly listenNow = output<void>();
 }

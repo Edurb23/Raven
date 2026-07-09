@@ -31,7 +31,22 @@ export const ALBUM_DETAILS: AlbumDetails = {
   savedCount: '412K',
   description:
     'A compact and sharp Kendrick Lamar record built around direct writing, tense production and high replay value. On Raven, collectors track it as one of the defining rap releases of its moment.',
-  featuredArtists: ['SZA', 'Dody6', 'Lefty Gunplay', 'Wallie the Sensei', 'Roddy Ricch'],
+  featuredArtists: [
+    { name: 'SZA', role: 'Vocal feature', image: covers.clairo },
+    { name: 'Dody6', role: 'Guest verse', image: covers.gnx },
+    { name: 'Lefty Gunplay', role: 'Guest verse', image: covers.utopia },
+    { name: 'Wallie the Sensei', role: 'Guest voice', image: covers.blonde },
+    { name: 'Roddy Ricch', role: 'Guest verse', image: covers.brat }
+  ],
+  listenPlatforms: [
+    { label: 'Apple Music', url: 'https://music.apple.com/search?term=Kendrick%20Lamar%20GNX' },
+    { label: 'Spotify', url: 'https://open.spotify.com/search/Kendrick%20Lamar%20GNX' },
+    { label: 'YouTube Music', url: 'https://music.youtube.com/search?q=Kendrick+Lamar+GNX' },
+    { label: 'Tidal', url: 'https://listen.tidal.com/search?q=Kendrick%20Lamar%20GNX' }
+  ],
+  shopLinks: [
+    { label: 'Amazon vinyl', url: 'https://www.amazon.com/s?k=Kendrick+Lamar+GNX+vinyl' }
+  ],
   tracks: [
     { number: 1, title: 'wacced out murals', duration: '5:17', likes: 14200 },
     { number: 2, title: 'squabble up', duration: '2:37', likes: 22100 },

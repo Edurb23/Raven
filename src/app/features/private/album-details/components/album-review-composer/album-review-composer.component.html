@@ -1,0 +1,44 @@
+<article class="review-composer" aria-labelledby="review-composer-title">
+  <div class="review-composer__header">
+    <img [src]="album().cover" [alt]="album().title + ' cover'" />
+    <div>
+      <p>Write a review</p>
+      <h3 id="review-composer-title">Review {{ album().title }}</h3>
+      <span>Share what this record means to your collection.</span>
+    </div>
+  </div>
+
+  <div class="review-composer__rating" aria-label="Choose your rating">
+    @for (rating of [1, 2, 3, 4, 5]; track rating) {
+      <button
+        type="button"
+        [class.review-composer__star--active]="selectedRating() >= rating"
+        [attr.aria-label]="'Rate ' + rating + ' out of 5'"
+        (click)="selectRating(rating)"
+      >
+        *
+      </button>
+    }
+    <span>
+      @if (selectedRating() > 0) {
+        {{ selectedRating() }}.0 / 5
+      } @else {
+        No rating yet
+      }
+    </span>
+  </div>
+
+  <label class="review-composer__field">
+    <span>Your review</span>
+    <textarea rows="5" placeholder="Write your thoughts about the album, favorite tracks, replay value and how it fits your collection."></textarea>
+  </label>
+
+  <div class="review-composer__footer">
+    <div class="review-composer__tags" aria-label="Review tags">
+      <button type="button">First listen</button>
+      <button type="button">Revisited</button>
+      <button type="button">Vinyl notes</button>
+    </div>
+    <button class="review-composer__submit" type="button">Publish review</button>
+  </div>
+</article>

@@ -75,6 +75,9 @@ b {
 }
 
 .album-hero__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgba(148, 163, 184, 0.14);
   border-radius: 999px;
   background: rgba(11, 11, 18, 0.44);
@@ -83,6 +86,7 @@ b {
   font: inherit;
   font-weight: 900;
   padding: 0.68rem 1rem;
+  text-decoration: none;
   backdrop-filter: blur(14px);
   transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
 }

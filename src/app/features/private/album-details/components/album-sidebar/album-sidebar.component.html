@@ -19,14 +19,10 @@
     </div>
   </article>
 
-  @if (album().featuredArtists.length) {
-    <article class="side-card">
-      <p>Features</p>
-      <div class="chip-row">
-        @for (artist of album().featuredArtists; track artist) {
-          <span>{{ artist }}</span>
-        }
-      </div>
-    </article>
-  }
+  <article class="side-card side-card--actions">
+    <p>Album access</p>
+    <button type="button" (click)="listenNow.emit()">Listen now</button>
+    <a [href]="album().shopLinks[0].url" target="_blank" rel="noreferrer">Shop now</a>
+    <span>Find the vinyl on Amazon.</span>
+  </article>
 </aside>

@@ -6,6 +6,7 @@ import { HOME_NAVIGATION } from '../home/mock/home.mock-data';
 import { HomeNavigationItem } from '../home/models/home.models';
 import { AlbumAboutComponent } from './components/album-about/album-about.component';
 import { AlbumHeroComponent } from './components/album-hero/album-hero.component';
+import { AlbumReviewComposerComponent } from './components/album-review-composer/album-review-composer.component';
 import { AlbumReviewCardComponent } from './components/album-review-card/album-review-card.component';
 import { AlbumSidebarComponent } from './components/album-sidebar/album-sidebar.component';
 import { AlbumTabsComponent } from './components/album-tabs/album-tabs.component';
@@ -25,6 +26,7 @@ import { AlbumDetailsDataService } from './services/album-details-data.service';
     AlbumTracksComponent,
     AlbumAboutComponent,
     AlbumSidebarComponent,
+    AlbumReviewComposerComponent,
     AlbumReviewCardComponent,
     RelatedAlbumsComponent
   ],
@@ -40,6 +42,7 @@ export class AlbumDetailsComponent {
   protected readonly selectedTab = signal<AlbumDetailTab>('Overview');
   protected readonly reviewFilters = ['Most Recent', 'Highest Rated', 'Most Helpful'];
   protected readonly selectedReviewFilter = signal('Most Recent');
+  protected readonly listenModalOpen = signal(false);
   protected readonly navigation: HomeNavigationItem[] = HOME_NAVIGATION.map((item) => ({
     ...item,
     active: item.label === 'Albums'
@@ -66,5 +69,13 @@ export class AlbumDetailsComponent {
 
   protected selectReviewFilter(filter: string): void {
     this.selectedReviewFilter.set(filter);
+  }
+
+  protected openListenModal(): void {
+    this.listenModalOpen.set(true);
+  }
+
+  protected closeListenModal(): void {
+    this.listenModalOpen.set(false);
   }
 }
