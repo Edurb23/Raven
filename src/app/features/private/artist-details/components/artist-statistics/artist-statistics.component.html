@@ -1,0 +1,50 @@
+<section class="overview-grid">
+  <article class="feature-card">
+    <p>Latest release</p>
+    <img [src]="artist().latestRelease.cover" [alt]="artist().latestRelease.title + ' cover'" />
+    <h2>{{ artist().latestRelease.title }}</h2>
+    <span>{{ artist().latestRelease.year }} - {{ artist().latestRelease.genre }}</span>
+  </article>
+
+  <article class="feature-card">
+    <p>Featured album</p>
+    <h2>{{ artist().featuredAlbum.title }}</h2>
+    <span>{{ artist().featuredAlbum.reviewCount }} community reviews</span>
+    <mark>★★★★★ {{ artist().featuredAlbum.averageRating }}</mark>
+  </article>
+
+  <article class="stats-card">
+    <p>Artist statistics</p>
+    <div class="stats-card__grid">
+      @for (stat of artist().statistics; track stat.label) {
+        <span><strong>{{ stat.value }}</strong>{{ stat.label }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="feature-card">
+    <p>Top songs</p>
+    <ol>
+      @for (song of artist().topSongs; track song) {
+        <li>{{ song }} <small>future listening data</small></li>
+      }
+    </ol>
+  </article>
+</section>
+
+<section class="related-card">
+  <div class="section-heading">
+    <p>Related artists</p>
+    <h2>Collectors also explore</h2>
+  </div>
+
+  <div class="related-card__grid">
+    @for (artistItem of artist().relatedArtists; track artistItem.name) {
+      <article>
+        <img [src]="artistItem.image" [alt]="artistItem.name + ' image'" />
+        <strong>{{ artistItem.name }}</strong>
+        <span>{{ artistItem.genre }}</span>
+      </article>
+    }
+  </div>
+</section>

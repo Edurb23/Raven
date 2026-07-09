@@ -1,0 +1,95 @@
+<app-home-sidebar [items]="navigation" />
+
+<div class="album-topbar">
+  <app-home-top-bar />
+</div>
+
+<main class="album-shell">
+  <app-album-hero [album]="album" appRevealOnScroll />
+
+  <app-album-tabs
+    [tabs]="tabs"
+    [selected]="selectedTab()"
+    (selectedChange)="selectTab($event)"
+    appRevealOnScroll
+  />
+
+  <div class="album-layout">
+    <section class="album-layout__main" appRevealOnScroll>
+      @switch (selectedTab()) {
+        @case ('Overview') {
+          <section class="overview-grid">
+            <article class="overview-card overview-card--wide">
+              <div class="section-heading">
+                <p>Track list</p>
+                <h2>Songs people are collecting</h2>
+              </div>
+              <app-album-tracks [tracks]="album.tracks.slice(0, 6)" />
+            </article>
+
+            <article class="overview-card">
+              <div class="section-heading">
+                <p>About</p>
+                <h2>{{ album.title }}</h2>
+              </div>
+              <span>{{ album.description }}</span>
+            </article>
+
+            <article class="overview-card">
+              <div class="section-heading">
+                <p>Related albums</p>
+                <h2>Collectors also saved</h2>
+              </div>
+              <app-related-albums [albums]="album.relatedAlbums.slice(0, 3)" />
+            </article>
+          </section>
+        }
+        @case ('Tracks') {
+          <div class="section-heading">
+            <p>Tracks</p>
+            <h2>Full track list</h2>
+          </div>
+          <app-album-tracks [tracks]="album.tracks" />
+        }
+        @case ('Reviews') {
+          <section class="reviews-section">
+            <div class="section-heading">
+              <p>Community reviews</p>
+              <h2>What collectors are saying</h2>
+            </div>
+
+            <div class="review-filters" aria-label="Review filters">
+              @for (filter of reviewFilters; track filter) {
+                <button
+                  type="button"
+                  [class.review-filters__item--active]="selectedReviewFilter() === filter"
+                  (click)="selectReviewFilter(filter)"
+                >
+                  {{ filter }}
+                </button>
+              }
+            </div>
+
+            <div class="reviews-section__list">
+              @for (review of filteredReviews(); track review.user + review.date) {
+                <app-album-review-card [review]="review" />
+              }
+            </div>
+          </section>
+        }
+        @case ('About') {
+          <app-album-about [album]="album" />
+        }
+        @case ('Related Albums') {
+          <div class="section-heading">
+            <p>Related albums</p>
+            <h2>Records with similar collector energy</h2>
+          </div>
+          <app-related-albums [albums]="album.relatedAlbums" />
+        }
+      }
+    </section>
+
+    <app-album-sidebar class="album-layout__side" [album]="album" appRevealOnScroll />
+  </div>
+</main>

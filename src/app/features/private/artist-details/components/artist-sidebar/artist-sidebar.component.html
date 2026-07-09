@@ -1,0 +1,50 @@
+<aside class="artist-sidebar" aria-label="Artist quick facts">
+  <article class="side-card">
+    <p>Quick facts</p>
+    <dl>
+      <div><dt>Followers</dt><dd>{{ artist().followers }}</dd></div>
+      <div><dt>Albums</dt><dd>{{ artist().albumCount }}</dd></div>
+      <div><dt>Average rating</dt><dd>{{ artist().averageRating }}</dd></div>
+      <div><dt>Community rating</dt><dd>{{ artist().communityRating }}</dd></div>
+      <div><dt>Latest album</dt><dd>{{ artist().latestRelease.title }}</dd></div>
+    </dl>
+  </article>
+
+  <article class="side-card">
+    <p>Genres</p>
+    <div class="chip-row">
+      @for (genre of artist().genres; track genre) {
+        <span>{{ genre }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="side-card">
+    <p>Upcoming releases</p>
+    <div class="line-list">
+      @for (release of artist().sidebar.upcomingReleases; track release) {
+        <span>{{ release }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="side-card side-card--highlight">
+    <p>Trending collection</p>
+    <strong>{{ artist().sidebar.trendingCollection }}</strong>
+  </article>
+
+  <article class="side-card">
+    <p>People also viewed</p>
+    <div class="viewed-list">
+      @for (artistItem of artist().sidebar.peopleAlsoViewed; track artistItem.name) {
+        <article>
+          <img [src]="artistItem.image" [alt]="artistItem.name + ' image'" />
+          <div>
+            <strong>{{ artistItem.name }}</strong>
+            <span>{{ artistItem.genre }}</span>
+          </div>
+        </article>
+      }
+    </div>
+  </article>
+</aside>

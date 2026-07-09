@@ -1,0 +1,42 @@
+<section class="about-grid">
+  <article class="about-card about-card--bio">
+    <p>Biography</p>
+    <h2>{{ artist().name }}</h2>
+    <span>{{ artist().biography }}</span>
+  </article>
+
+  <article class="about-card">
+    <p>Artist facts</p>
+    <dl>
+      <div><dt>Genres</dt><dd>{{ artist().genres.join(', ') }}</dd></div>
+      <div><dt>Origin</dt><dd>{{ artist().origin }}</dd></div>
+      <div><dt>Country</dt><dd>{{ artist().country }}</dd></div>
+      <div><dt>Years active</dt><dd>{{ artist().yearsActive }}</dd></div>
+      <div><dt>Official website</dt><dd>{{ artist().officialWebsite }}</dd></div>
+    </dl>
+  </article>
+
+  <article class="about-card">
+    <p>Members</p>
+    <div class="chip-row">
+      @for (member of artist().members; track member) {
+        <span>{{ member }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="about-card">
+    <p>Record labels</p>
+    <div class="chip-row">
+      @for (label of artist().labels; track label) {
+        <span>{{ label }}</span>
+      }
+    </div>
+  </article>
+
+  <article class="about-card about-card--links">
+    <p>External links</p>
+    <button type="button">Spotify future</button>
+    <button type="button">Apple Music future</button>
+  </article>
+</section>

@@ -1,0 +1,18 @@
+<section class="track-list">
+  @for (track of tracks(); track track.number) {
+    <article class="track-row">
+      <span class="track-row__number">{{ track.number }}</span>
+      <div class="track-row__title">
+        <strong>{{ track.title }}</strong>
+        @if (track.featuredArtists?.length) {
+          <small>feat. {{ track.featuredArtists?.join(', ') }}</small>
+        }
+      </div>
+      <span class="track-row__duration">{{ track.duration }}</span>
+      <button type="button" [attr.aria-label]="'Like ' + track.title">
+        <span aria-hidden="true">♥</span>
+        {{ track.likes }}
+      </button>
+    </article>
+  }
+</section>

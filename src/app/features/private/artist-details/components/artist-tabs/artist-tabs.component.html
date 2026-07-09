@@ -1,0 +1,12 @@
+<nav class="artist-tabs" aria-label="Artist sections">
+  @for (tab of tabs(); track tab) {
+    <button
+      type="button"
+      class="artist-tabs__item"
+      [class.artist-tabs__item--active]="selected() === tab"
+      (click)="selectedChange.emit(tab)"
+    >
+      {{ tab }}
+    </button>
+  }
+</nav>

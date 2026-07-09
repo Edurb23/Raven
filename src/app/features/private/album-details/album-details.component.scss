@@ -1,0 +1,173 @@
+:host {
+  position: relative;
+  display: block;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(109, 40, 217, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 18%, rgba(37, 99, 235, 0.14), transparent 25rem),
+    var(--background);
+  color: var(--text-primary);
+}
+
+.album-topbar {
+  position: absolute;
+  top: 1.25rem;
+  right: 2rem;
+  left: 8.6rem;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.album-topbar app-home-top-bar {
+  display: block;
+  pointer-events: auto;
+}
+
+.album-shell {
+  width: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0 0 5rem;
+}
+
+app-album-hero {
+  display: block;
+}
+
+app-album-tabs,
+.album-layout {
+  width: min(100% - 2rem, 68rem);
+  margin-inline: auto;
+}
+
+app-album-tabs {
+  display: block;
+  margin-top: 0;
+}
+
+.album-layout {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.album-layout__main {
+  display: grid;
+  gap: 1.15rem;
+  min-width: 0;
+}
+
+.section-heading p,
+.section-heading h2 {
+  margin: 0;
+}
+
+.section-heading p {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin-top: 0.3rem;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+}
+
+.overview-grid,
+.reviews-section,
+.reviews-section__list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.overview-card {
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 1rem;
+  background: rgba(22, 22, 37, 0.38);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.14);
+  padding: 1rem;
+}
+
+.overview-card > span {
+  display: block;
+  color: #c8d4e7;
+  line-height: 1.7;
+  margin-top: 0.85rem;
+}
+
+.overview-card app-album-tracks,
+.overview-card app-related-albums {
+  display: block;
+  margin-top: 1rem;
+}
+
+.review-filters {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+}
+
+.review-filters button {
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 999px;
+  background: rgba(22, 22, 37, 0.5);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font: inherit;
+  font-weight: 900;
+  padding: 0.7rem 0.9rem;
+  transition: color 250ms ease, border-color 250ms ease, background 250ms ease;
+}
+
+.review-filters button:hover,
+.review-filters__item--active {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(109, 40, 217, 0.16);
+  color: var(--text-primary);
+}
+
+@media (min-width: 1200px) {
+  .album-layout {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+
+  .overview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .overview-card--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) and (min-height: 760px) {
+  .album-layout__side {
+    position: sticky;
+    top: 6.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .album-topbar {
+    top: 0.75rem;
+    right: 1rem;
+    left: 1rem;
+  }
+
+  app-album-tabs,
+  .album-layout {
+    width: min(100% - 1rem, 68rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 1ms !important;
+  }
+}

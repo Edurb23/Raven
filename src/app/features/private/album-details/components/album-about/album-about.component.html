@@ -1,0 +1,30 @@
+<section class="about-grid">
+  <article class="about-card about-card--wide">
+    <p>About</p>
+    <h2>{{ album().title }}</h2>
+    <span>{{ album().description }}</span>
+  </article>
+
+  @if (album().featuredArtists.length) {
+    <article class="about-card">
+      <p>Featuring</p>
+      <div class="chip-row">
+        @for (artist of album().featuredArtists; track artist) {
+          <span>{{ artist }}</span>
+        }
+      </div>
+    </article>
+  }
+
+  <article class="about-card">
+    <p>Credits</p>
+    <div class="credit-list">
+      @for (credit of album().credits; track credit.role) {
+        <div>
+          <strong>{{ credit.role }}</strong>
+          <span>{{ credit.names.join(', ') }}</span>
+        </div>
+      }
+    </div>
+  </article>
+</section>

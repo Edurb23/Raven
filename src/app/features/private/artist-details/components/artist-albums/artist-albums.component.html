@@ -1,0 +1,25 @@
+<section class="discography">
+  @for (group of groupedAlbums(); track group.year) {
+    <section class="discography__year">
+      <h2>{{ group.year }}</h2>
+      <div class="discography__grid">
+        @for (album of group.albums; track album.title) {
+          <article class="album-card">
+            <div class="album-card__cover">
+              <img [src]="album.cover" [alt]="album.title + ' cover'" />
+              <button type="button">Quick view</button>
+            </div>
+            <div>
+              <strong>{{ album.title }}</strong>
+              <span>{{ album.genre }} - {{ album.year }}</span>
+            </div>
+            <footer>
+              <mark>★★★★★ {{ album.averageRating }}</mark>
+              <span>{{ album.reviewCount }} reviews</span>
+            </footer>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</section>

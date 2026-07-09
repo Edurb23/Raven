@@ -1,0 +1,82 @@
+.artist-sidebar {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.side-card {
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 1rem;
+  background: rgba(22, 22, 37, 0.4);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.14);
+  padding: 0.9rem;
+}
+
+.side-card p {
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+}
+
+dl,
+.line-list,
+.viewed-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+dl div {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+dt,
+span {
+  color: var(--text-secondary);
+}
+
+dd {
+  margin: 0;
+  text-align: right;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.chip-row span,
+.line-list span {
+  border-radius: 999px;
+  background: rgba(109, 40, 217, 0.12);
+  color: var(--text-primary);
+  padding: 0.42rem 0.58rem;
+}
+
+.side-card--highlight {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(109, 40, 217, 0.18), transparent 10rem),
+    rgba(22, 22, 37, 0.45);
+}
+
+.viewed-list article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.viewed-list img {
+  width: 2.6rem;
+  aspect-ratio: 1;
+  border-radius: 0.7rem;
+  object-fit: cover;
+}
+
+.viewed-list strong {
+  display: block;
+}

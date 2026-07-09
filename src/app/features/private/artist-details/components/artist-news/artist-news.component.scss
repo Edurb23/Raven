@@ -1,0 +1,60 @@
+.news-timeline {
+  display: grid;
+  gap: 1rem;
+}
+
+.news-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 1.15rem;
+  background: rgba(22, 22, 37, 0.52);
+  padding: 1rem;
+  transition: transform 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.news-card:hover {
+  border-color: rgba(139, 92, 246, 0.32);
+  box-shadow: 0 18px 42px rgba(37, 99, 235, 0.12);
+  transform: translateY(-4px);
+}
+
+.news-card__dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.5);
+  margin-top: 0.3rem;
+}
+
+mark {
+  border-radius: 999px;
+  background: rgba(109, 40, 217, 0.18);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 900;
+  padding: 0.35rem 0.55rem;
+}
+
+h2,
+p {
+  margin: 0;
+}
+
+h2 {
+  margin-top: 0.75rem;
+}
+
+p {
+  color: #c8d4e7;
+  line-height: 1.6;
+  margin-top: 0.35rem;
+}
+
+time {
+  display: block;
+  color: var(--text-secondary);
+  margin-top: 0.75rem;
+}

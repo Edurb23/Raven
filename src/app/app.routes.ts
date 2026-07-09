@@ -37,10 +37,24 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'app/albums/:id',
+    loadComponent: () =>
+      import('./features/private/album-details/album-details.component').then(
+        (component) => component.AlbumDetailsComponent
+      )
+  },
+  {
     path: 'app/artists',
     loadComponent: () =>
       import('./features/private/artists/artists.component').then(
         (component) => component.ArtistsComponent
+      )
+  },
+  {
+    path: 'app/artists/:id',
+    loadComponent: () =>
+      import('./features/private/artist-details/artist-details.component').then(
+        (component) => component.ArtistDetailsComponent
       )
   },
   {

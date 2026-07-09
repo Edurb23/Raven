@@ -1,0 +1,120 @@
+.discography,
+.discography__year {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.discography__year {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  position: sticky;
+  top: 5.2rem;
+  z-index: 2;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(11, 11, 18, 0.75);
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0.5rem 0.8rem;
+}
+
+.discography__grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.album-card {
+  display: grid;
+  gap: 0.7rem;
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 1rem;
+  background: rgba(22, 22, 37, 0.42);
+  padding: 0.65rem;
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+}
+
+.album-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 20px 48px rgba(109, 40, 217, 0.18);
+  transform: translateY(-6px);
+}
+
+.album-card__cover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.82rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.album-card:hover img {
+  transform: scale(1.04);
+}
+
+button {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(11, 11, 18, 0.76);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 900;
+  opacity: 0;
+  padding: 0.5rem 0.65rem;
+  transform: translateY(0.4rem);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.album-card:hover button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+strong {
+  display: block;
+}
+
+span {
+  color: var(--text-secondary);
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+mark {
+  border-radius: 999px;
+  background: rgba(109, 40, 217, 0.2);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0.35rem 0.5rem;
+}
+
+@media (min-width: 680px) {
+  .discography__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1120px) {
+  .discography__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,31 @@
+<section
+  class="album-hero"
+  [style.background-image]="'linear-gradient(90deg, rgba(11,11,18,0.94) 0%, rgba(11,11,18,0.5) 48%, rgba(11,11,18,0.86) 100%), linear-gradient(0deg, rgba(11,11,18,0.94), rgba(11,11,18,0.08) 58%), url(' + album().banner + ')'"
+>
+  <div class="album-hero__inner">
+    <img class="album-hero__cover" [src]="album().cover" [alt]="album().title + ' album cover'" />
+
+    <div class="album-hero__content">
+      <p>Album</p>
+      <h1>{{ album().title }}</h1>
+      <strong>{{ album().artist }}</strong>
+
+      <div class="album-hero__meta">
+        <span>{{ album().genre }}</span>
+        <span>{{ album().releaseYear }}</span>
+        <span>{{ album().runtime }}</span>
+      </div>
+
+      <div class="album-hero__stats">
+        <span><b>{{ album().averageRating }}</b> avg rating</span>
+        <span><b>{{ album().reviewCount }}</b> reviews</span>
+        <span><b>{{ album().savedCount }}</b> saved</span>
+      </div>
+    </div>
+
+    <div class="album-hero__actions">
+      <button class="album-hero__button album-hero__button--primary" type="button">Favorite</button>
+      <button class="album-hero__button" type="button">Share</button>
+    </div>
+  </div>
+</section>

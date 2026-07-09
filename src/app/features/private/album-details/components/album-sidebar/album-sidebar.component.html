@@ -1,0 +1,32 @@
+<aside class="album-sidebar" aria-label="Album facts">
+  <article class="side-card">
+    <p>Quick facts</p>
+    <dl>
+      <div><dt>Artist</dt><dd>{{ album().artist }}</dd></div>
+      <div><dt>Released</dt><dd>{{ album().releaseDate }}</dd></div>
+      <div><dt>Label</dt><dd>{{ album().label }}</dd></div>
+      <div><dt>Country</dt><dd>{{ album().country }}</dd></div>
+      <div><dt>Runtime</dt><dd>{{ album().runtime }}</dd></div>
+    </dl>
+  </article>
+
+  <article class="side-card">
+    <p>Community</p>
+    <div class="stat-grid">
+      @for (stat of album().stats; track stat.label) {
+        <span><strong>{{ stat.value }}</strong>{{ stat.label }}</span>
+      }
+    </div>
+  </article>
+
+  @if (album().featuredArtists.length) {
+    <article class="side-card">
+      <p>Features</p>
+      <div class="chip-row">
+        @for (artist of album().featuredArtists; track artist) {
+          <span>{{ artist }}</span>
+        }
+      </div>
+    </article>
+  }
+</aside>

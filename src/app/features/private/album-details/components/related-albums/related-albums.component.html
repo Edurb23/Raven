@@ -1,0 +1,10 @@
+<section class="related-grid">
+  @for (album of albums(); track album.title) {
+    <article class="related-card">
+      <img [src]="album.cover" [alt]="album.title + ' cover'" />
+      <strong>{{ album.title }}</strong>
+      <span>{{ album.artist }} - {{ album.year }}</span>
+      <mark>★★★★★ {{ album.rating }}</mark>
+    </article>
+  }
+</section>

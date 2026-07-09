@@ -1,0 +1,74 @@
+<section class="community-grid">
+  <article class="community-panel community-panel--wide">
+    <div class="section-heading">
+      <p>Latest reviews</p>
+      <h2>What collectors are saying</h2>
+    </div>
+    <div class="review-stack">
+      @for (review of artist().community.latestReviews; track review.user + review.date) {
+        <app-artist-review-card [review]="review" />
+      }
+    </div>
+  </article>
+
+  <article class="community-panel">
+    <div class="section-heading">
+      <p>Most liked review</p>
+      <h2>This week</h2>
+    </div>
+    <app-artist-review-card [review]="artist().community.mostLikedReview" />
+  </article>
+
+  <article class="community-panel">
+    <div class="section-heading">
+      <p>Collection highlights</p>
+      <h2>Where this artist appears</h2>
+    </div>
+    <div class="mini-list">
+      @for (collection of artist().community.collections; track collection.title) {
+        <article>
+          @if (collection.image) {
+            <img [src]="collection.image" [alt]="collection.title + ' collection cover'" />
+          }
+          <div>
+            <strong>{{ collection.title }}</strong>
+            <span>{{ collection.description }}</span>
+            <small>{{ collection.meta }}</small>
+          </div>
+        </article>
+      }
+    </div>
+  </article>
+
+  <article class="community-panel">
+    <div class="section-heading">
+      <p>Recent posts</p>
+      <h2>Discussion board</h2>
+    </div>
+    <div class="post-list">
+      @for (post of artist().community.posts; track post.title) {
+        <article>
+          <strong>{{ post.title }}</strong>
+          <span>{{ post.description }}</span>
+          <small>{{ post.meta }}</small>
+        </article>
+      }
+    </div>
+  </article>
+
+  <article class="community-panel">
+    <div class="section-heading">
+      <p>Recent followers</p>
+      <h2>New collectors</h2>
+    </div>
+    <div class="follower-row">
+      @for (follower of artist().community.followers; track follower.name) {
+        <article>
+          <img [src]="follower.image" [alt]="follower.name + ' avatar'" />
+          <strong>{{ follower.name }}</strong>
+          <span>{{ follower.genre }}</span>
+        </article>
+      }
+    </div>
+  </article>
+</section>

@@ -1,0 +1,13 @@
+<section class="news-timeline">
+  @for (item of news(); track item.title) {
+    <article class="news-card">
+      <span class="news-card__dot" aria-hidden="true"></span>
+      <div>
+        <mark>{{ item.type }}</mark>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.description }}</p>
+        <time>{{ item.date }}</time>
+      </div>
+    </article>
+  }
+</section>

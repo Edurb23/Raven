@@ -1,0 +1,17 @@
+<article class="review-card">
+  <img [src]="review().avatar" [alt]="review().user + ' avatar'" />
+  <div>
+    <header>
+      <div>
+        <strong>{{ review().user }}</strong>
+        <span>{{ review().date }} - {{ review().album }}</span>
+      </div>
+      <mark>★★★★★ {{ review().rating }}</mark>
+    </header>
+    <p>{{ review().text }}</p>
+    <footer>
+      <span>{{ review().likes }} likes</span>
+      <span>{{ review().comments }} comments</span>
+    </footer>
+  </div>
+</article>

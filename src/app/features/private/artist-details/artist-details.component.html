@@ -1,0 +1,74 @@
+<app-home-sidebar [items]="navigation" />
+
+<div class="artist-topbar">
+  <app-home-top-bar />
+</div>
+
+<main class="artist-shell">
+  <app-artist-hero [artist]="artist" appRevealOnScroll />
+
+  <app-artist-tabs
+    [tabs]="tabs"
+    [selected]="selectedTab()"
+    (selectedChange)="selectTab($event)"
+    appRevealOnScroll
+  />
+
+  <div class="artist-layout">
+    <section class="artist-layout__main" appRevealOnScroll>
+      @switch (selectedTab()) {
+        @case ('Overview') {
+          <app-artist-statistics [artist]="artist" />
+        }
+        @case ('Albums') {
+          <div class="section-heading">
+            <p>Discography</p>
+            <h2>Complete album archive</h2>
+          </div>
+          <app-artist-albums [albums]="artist.albums" />
+        }
+        @case ('Community') {
+          <app-artist-community [artist]="artist" />
+        }
+        @case ('News') {
+          <div class="section-heading">
+            <p>News timeline</p>
+            <h2>Artist updates</h2>
+          </div>
+          <app-artist-news [news]="artist.news" />
+        }
+        @case ('Reviews') {
+          <section class="reviews-section">
+            <div class="section-heading">
+              <p>Community reviews</p>
+              <h2>Dedicated review archive</h2>
+            </div>
+
+            <div class="review-filters" aria-label="Review filters">
+              @for (filter of reviewFilters; track filter) {
+                <button
+                  type="button"
+                  [class.review-filters__item--active]="selectedReviewFilter() === filter"
+                  (click)="selectReviewFilter(filter)"
+                >
+                  {{ filter }}
+                </button>
+              }
+            </div>
+
+            <div class="reviews-section__list">
+              @for (review of filteredReviews(); track review.user + review.album) {
+                <app-artist-review-card [review]="review" />
+              }
+            </div>
+          </section>
+        }
+        @case ('About') {
+          <app-artist-about [artist]="artist" />
+        }
+      }
+    </section>
+
+    <app-artist-sidebar class="artist-layout__side" [artist]="artist" appRevealOnScroll />
+  </div>
+</main>

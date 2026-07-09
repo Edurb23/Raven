@@ -1,0 +1,31 @@
+<section
+  class="artist-hero"
+  [style.background-image]="'linear-gradient(90deg, rgba(11,11,18,0.9) 0%, rgba(11,11,18,0.48) 46%, rgba(11,11,18,0.82) 100%), linear-gradient(0deg, rgba(11,11,18,0.92), rgba(11,11,18,0.08) 58%), url(' + artist().banner + ')'"
+>
+  <div class="artist-hero__inner">
+    <img class="artist-hero__photo" [src]="artist().photo" [alt]="artist().name + ' profile photo'" />
+
+    <div class="artist-hero__content">
+      <p class="artist-hero__eyebrow">Artist hub</p>
+      <h1>{{ artist().name }}</h1>
+
+      <div class="artist-hero__meta" aria-label="Artist details">
+        <span>{{ artist().genres.join(' / ') }}</span>
+        <span>{{ artist().country }}</span>
+        <span>{{ artist().yearsActive }}</span>
+      </div>
+
+      <div class="artist-hero__stats" aria-label="Artist statistics">
+        <span><strong>{{ artist().followers }}</strong> followers</span>
+        <span><strong>{{ artist().albumCount }}</strong> albums</span>
+        <span><strong>{{ artist().averageRating }}</strong> avg rating</span>
+      </div>
+    </div>
+
+    <div class="artist-hero__actions" aria-label="Artist actions">
+      <button class="artist-hero__button artist-hero__button--primary" type="button">Follow</button>
+      <button class="artist-hero__button" type="button">Favorite</button>
+      <button class="artist-hero__button" type="button">Share</button>
+    </div>
+  </div>
+</section>

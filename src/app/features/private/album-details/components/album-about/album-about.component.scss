@@ -1,0 +1,74 @@
+.about-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.about-card {
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 1rem;
+  background: rgba(22, 22, 37, 0.38);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.14);
+  padding: 1rem;
+}
+
+p,
+h2 {
+  margin: 0;
+}
+
+p {
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin-top: 0.35rem;
+}
+
+.about-card > span {
+  display: block;
+  color: #c8d4e7;
+  line-height: 1.7;
+  margin-top: 0.85rem;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.85rem;
+}
+
+.chip-row span {
+  border-radius: 999px;
+  background: rgba(109, 40, 217, 0.14);
+  color: var(--text-primary);
+  padding: 0.48rem 0.65rem;
+}
+
+.credit-list {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.85rem;
+}
+
+.credit-list div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.credit-list span {
+  color: var(--text-secondary);
+}
+
+@media (min-width: 760px) {
+  .about-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-card--wide {
+    grid-column: 1 / -1;
+  }
+}
