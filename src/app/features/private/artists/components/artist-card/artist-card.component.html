@@ -1,15 +1,22 @@
 <article class="artist-card">
   <div class="artist-card__image">
-    <img [src]="artist().image" [alt]="artist().name + ' artist photo'" />
-    <div class="artist-card__hover">
-      <span>Latest</span>
-      <strong>{{ artist().latestRelease }}</strong>
-    </div>
+    @if (artist().image && failedImage() !== artist().image) {
+      <img [src]="artist().image" [alt]="artist().name + ' artist photo'"
+        (error)="failedImage.set(artist().image)" />
+    } @else {
+      <div class="artist-card__placeholder" role="img" [attr.aria-label]="artist().name + ' — photo unavailable'">
+        {{ artist().name.charAt(0).toUpperCase() }}
+      </div>
+    }
   </div>
 
   <div class="artist-card__body">
     <div>
-      <h3>{{ artist().name }}</h3>
+      <h3>
+        <a class="artist-card__link" [routerLink]="artist().id ? ['/app/artists', artist().id] : null">
+          {{ artist().name }}
+        </a>
+      </h3>
       <p>{{ artist().genre }}</p>
     </div>
     <button type="button">Follow</button>

@@ -1,0 +1,66 @@
+import { Component } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { ArtistDetailsComponent } from './artist-details.component';
+import { TopBarComponent } from '../home/components/top-bar/top-bar.component';
+import { API_BASE_URL } from '../../../core/configs/api.config';
+
+@Component({ selector: 'app-home-top-bar', template: '' })
+class TopBarStub {}
+
+describe('Artist details routing', () => {
+  let params: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
+  let http: HttpTestingController;
+
+  beforeEach(() => {
+    params = new BehaviorSubject(convertToParamMap({ id: 'ariana-id' }));
+    TestBed.configureTestingModule({
+      imports: [ArtistDetailsComponent],
+      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(),
+        { provide: ActivatedRoute, useValue: { paramMap: params } }]
+    }).overrideComponent(ArtistDetailsComponent, {
+      remove: { imports: [TopBarComponent] }, add: { imports: [TopBarStub] }
+    });
+    http = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => http.verify());
+
+  it('loads the selected artist and refreshes when the route ID changes', () => {
+    const fixture = TestBed.createComponent(ArtistDetailsComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Loading artist');
+    http.expectOne(`${API_BASE_URL}/artist/ariana-id`).flush({
+      id: 'ariana-id', name: 'Ariana Grande', genres: ['Pop'], bio: 'Ariana biography',
+      artistImages: [{ selected: true, urlImage: '/9j/2Q==' }]
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Ariana Grande');
+    expect(fixture.nativeElement.textContent).toContain('Ariana biography');
+    expect(fixture.nativeElement.textContent).not.toContain('Kendrick');
+    expect(fixture.nativeElement.querySelector('.artist-hero__photo').getAttribute('src'))
+      .toBe('data:image/jpeg;base64,/9j/2Q==');
+
+    params.next(convertToParamMap({ id: 'radiohead-id' }));
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).not.toContain('Ariana Grande');
+    http.expectOne(`${API_BASE_URL}/artist/radiohead-id`).flush({
+      id: 'radiohead-id', name: 'Radiohead', genres: [], bio: '', artistImages: []
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Radiohead');
+    expect(fixture.nativeElement.querySelector('.artist-hero__photo')).toBeNull();
+  });
+
+  it('shows a not-found state without falling back to a mock artist', () => {
+    const fixture = TestBed.createComponent(ArtistDetailsComponent);
+    fixture.detectChanges();
+    http.expectOne(`${API_BASE_URL}/artist/ariana-id`).flush({}, { status: 404, statusText: 'Not Found' });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Artist not found.');
+    expect(fixture.nativeElement.querySelector('app-artist-hero')).toBeNull();
+  });
+});

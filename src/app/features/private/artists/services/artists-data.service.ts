@@ -39,18 +39,31 @@ export class ArtistsDataService {
     return (supported.includes(primaryGenre as ArtistGenre) ? primaryGenre : 'Indie') as ArtistGenre;
   }
 
-  private resolveImage(images: ApiArtistImage[]): string {
-    const selected = images?.find((image) => image.selected) ?? images?.[0];
-    const image = selected?.urlImage;
+  resolveImage(images: ApiArtistImage[]): string {
+    const available = images?.filter((image) => image.urlImage?.trim());
+    const selected = available?.find((image) => image.selected) ?? available?.[0];
+    const image = selected?.urlImage.trim();
 
     if (!image) {
-      return '/raven/collection-covers/Kendrick_Lamar_-_GNX.png';
+      return '';
+    }
+
+    // JPEG Base64 starts with /9j/ and must not be treated as a URL path.
+    const base64 = image.replace(/\s/g, '');
+    const mimeType = base64.startsWith('/9j/') ? 'image/jpeg'
+      : base64.startsWith('iVBORw0KGgo') ? 'image/png'
+      : base64.startsWith('R0lGOD') ? 'image/gif'
+      : base64.startsWith('UklGR') ? 'image/webp'
+      : null;
+
+    if (mimeType) {
+      return `data:${mimeType};base64,${base64}`;
     }
 
     if (image.startsWith('data:') || image.startsWith('http') || image.startsWith('/')) {
       return image;
     }
 
-    return `data:image/jpeg;base64,${image}`;
+    return `data:image/jpeg;base64,${base64}`;
   }
 }

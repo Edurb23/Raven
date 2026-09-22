@@ -58,6 +58,38 @@ app-artist-tabs {
   min-width: 0;
 }
 
+.artist-panel {
+  padding: 1.25rem;
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 1.15rem;
+  background: rgba(22, 22, 37, 0.5);
+}
+
+.artist-biography {
+  white-space: pre-line;
+  line-height: 1.7;
+}
+
+.artist-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1rem;
+}
+
+.artist-genres span {
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.14);
+}
+
+.artist-panel a { color: var(--accent); }
+
+.artist-state {
+  width: min(100% - 2rem, 60rem);
+  margin: 10rem auto 0;
+}
+
 .section-heading p,
 .section-heading h2 {
   margin: 0;

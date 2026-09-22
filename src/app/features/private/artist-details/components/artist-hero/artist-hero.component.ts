@@ -8,5 +8,5 @@ import { ArtistDetails } from '../../models/artist-details.models';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistHeroComponent {
-  readonly artist = input.required<ArtistDetails>();
+  readonly artist = input.required<Pick<ArtistDetails, 'name' | 'photo' | 'banner' | 'genres'>>();
 }

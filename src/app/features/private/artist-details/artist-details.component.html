@@ -1,74 +1,42 @@
-<app-home-sidebar [items]="navigation" />
-
-<div class="artist-topbar">
-  <app-home-top-bar />
-</div>
-
+﻿<app-home-sidebar [items]="navigation" />
+<div class="artist-topbar"><app-home-top-bar /></div>
 <main class="artist-shell">
-  <app-artist-hero [artist]="artist" appRevealOnScroll />
-
-  <app-artist-tabs
-    [tabs]="tabs"
-    [selected]="selectedTab()"
-    (selectedChange)="selectTab($event)"
-    appRevealOnScroll
-  />
-
-  <div class="artist-layout">
-    <section class="artist-layout__main" appRevealOnScroll>
-      @switch (selectedTab()) {
-        @case ('Overview') {
-          <app-artist-statistics [artist]="artist" />
-        }
-        @case ('Albums') {
+  @if (state().artist; as artist) {
+    <app-artist-hero [artist]="artist" />
+    <app-artist-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectedTab.set($event)" />
+    <div class="artist-layout">
+      <section class="artist-layout__main artist-panel">
+        @if (selectedTab() === 'Overview' || selectedTab() === 'About') {
           <div class="section-heading">
-            <p>Discography</p>
-            <h2>Complete album archive</h2>
+            <p>Biography</p>
+            <h2>About {{ artist.name }}</h2>
           </div>
-          <app-artist-albums [albums]="artist.albums" />
+          <p class="artist-biography">{{ artist.bio || 'No biography available yet.' }}</p>
+        } @else {
+          <div class="section-heading"><h2>{{ selectedTab() }}</h2></div>
+          <p>{{ selectedTab() }} information is not available yet.</p>
         }
-        @case ('Community') {
-          <app-artist-community [artist]="artist" />
-        }
-        @case ('News') {
-          <div class="section-heading">
-            <p>News timeline</p>
-            <h2>Artist updates</h2>
-          </div>
-          <app-artist-news [news]="artist.news" />
-        }
-        @case ('Reviews') {
-          <section class="reviews-section">
-            <div class="section-heading">
-              <p>Community reviews</p>
-              <h2>Dedicated review archive</h2>
-            </div>
-
-            <div class="review-filters" aria-label="Review filters">
-              @for (filter of reviewFilters; track filter) {
-                <button
-                  type="button"
-                  [class.review-filters__item--active]="selectedReviewFilter() === filter"
-                  (click)="selectReviewFilter(filter)"
-                >
-                  {{ filter }}
-                </button>
-              }
-            </div>
-
-            <div class="reviews-section__list">
-              @for (review of filteredReviews(); track review.user + review.album) {
-                <app-artist-review-card [review]="review" />
-              }
-            </div>
-          </section>
-        }
-        @case ('About') {
-          <app-artist-about [artist]="artist" />
-        }
+      </section>
+      <aside class="artist-layout__side artist-panel">
+        <div class="section-heading"><p>Genres</p></div>
+        <div class="artist-genres">
+          @for (genre of artist.genres; track genre) {
+            <span>{{ genre }}</span>
+          } @empty {
+            <span>No genres available yet.</span>
+          }
+        </div>
+        <a routerLink="/app/artists">Back to artists</a>
+      </aside>
+    </div>
+  } @else {
+    <section class="artist-state artist-panel" aria-live="polite">
+      @if (state().loading) {
+        <p>Loading artist...</p>
+      } @else {
+        <p>{{ state().error }}</p>
+        <a routerLink="/app/artists">Back to artists</a>
       }
     </section>
-
-    <app-artist-sidebar class="artist-layout__side" [artist]="artist" appRevealOnScroll />
-  </div>
+  }
 </main>
