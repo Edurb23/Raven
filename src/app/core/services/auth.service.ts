@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { API_BASE_URL } from '../configs/api.config';
 import { LoginRequest, RegisterUserRequest, TokenResponse, UserDetailResponse } from '../models/auth.models';
+import { CurrentUserService } from './current-user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly currentUser = inject(CurrentUserService);
   private readonly tokenStorageKey = 'raven_token';
 
   register(payload: RegisterUserRequest) {
@@ -17,8 +19,10 @@ export class AuthService {
   }
 
   saveToken(token: string, remember: boolean): void {
+    this.currentUser.clearUser();
+
     const storage = remember ? localStorage : sessionStorage;
-    storage.setItem(this.tokenStorageKey, token);
+    storage.setItem(this.tokenStorageKey, this.normalizeToken(token));
 
     if (remember) {
       sessionStorage.removeItem(this.tokenStorageKey);
@@ -27,7 +31,17 @@ export class AuthService {
     }
   }
 
+  logout(): void {
+    this.currentUser.clearUser();
+    localStorage.removeItem(this.tokenStorageKey);
+    sessionStorage.removeItem(this.tokenStorageKey);
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.tokenStorageKey) ?? sessionStorage.getItem(this.tokenStorageKey);
+  }
+
+  private normalizeToken(token: string): string {
+    return token.replace(/^Bearer\s+/i, '').trim();
   }
 }

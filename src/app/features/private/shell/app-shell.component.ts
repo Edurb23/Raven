@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CurrentUserService } from '../../../core/services/current-user.service';
 import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
 import { AlbumCarouselComponent } from '../home/components/album-carousel/album-carousel.component';
 import { ArtistCardComponent } from '../home/components/artist-card/artist-card.component';
@@ -31,7 +32,12 @@ import { HomeDataService } from '../home/services/home-data.service';
 })
 export class AppShellComponent {
   private readonly homeData = inject(HomeDataService);
+  protected readonly currentUser = inject(CurrentUserService);
 
   protected readonly data = this.homeData.data;
   protected readonly navigation = this.homeData.navigation;
+
+  constructor() {
+    this.currentUser.loadCurrentUser().subscribe();
+  }
 }

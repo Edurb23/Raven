@@ -3,7 +3,7 @@
 <main class="home-shell">
   <app-home-top-bar />
 
-  <app-welcome-banner [stats]="data.stats" appRevealOnScroll />
+  <app-welcome-banner [stats]="data.stats" [displayName]="currentUser.displayName()" appRevealOnScroll />
 
   <div class="home-grid">
     <div class="home-grid__main">

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll.directive';
 import { GenreTabsComponent } from '../albums/components/genre-tabs/genre-tabs.component';
 import { HOME_NAVIGATION } from '../home/mock/home.mock-data';
@@ -24,12 +24,15 @@ import { ArtistsDataService } from './services/artists-data.service';
   styleUrl: './artists.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ArtistsComponent {
+export class ArtistsComponent implements OnInit {
   private readonly artistsData = inject(ArtistsDataService);
 
   protected readonly tabs = this.artistsData.tabs;
   protected readonly selectedTab = signal<ArtistTab>('All');
   protected readonly searchQuery = signal('');
+  protected readonly artists = signal<CatalogArtist[]>([]);
+  protected readonly isLoading = signal(true);
+  protected readonly errorMessage = signal('');
   protected readonly navigation: HomeNavigationItem[] = HOME_NAVIGATION.map((item) => ({
     ...item,
     active: item.label === 'Artists'
@@ -39,7 +42,7 @@ export class ArtistsComponent {
     const query = this.searchQuery().trim().toLowerCase();
     const selected = this.selectedTab();
 
-    return this.artistsData.artists.filter((artist) => {
+    return this.artists().filter((artist) => {
       const matchesTab = selected === 'All' || selected === 'A-Z' || artist.genre === selected;
       const matchesSearch =
         !query ||
@@ -62,6 +65,21 @@ export class ArtistsComponent {
 
     return [...groups.entries()].map(([letter, artists]) => ({ letter, artists }));
   });
+
+  ngOnInit(): void {
+    this.artistsData.listArtists().subscribe({
+      next: (artists) => {
+        this.artists.set(artists);
+        this.errorMessage.set('');
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.artists.set([]);
+        this.errorMessage.set('Sorry, we have an internal problem.');
+        this.isLoading.set(false);
+      }
+    });
+  }
 
   protected selectTab(tab: ArtistTab): void {
     this.selectedTab.set(tab);

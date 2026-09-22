@@ -1,12 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CurrentUserService } from '../../../../../core/services/current-user.service';
 
 @Component({
   selector: 'app-home-top-bar',
+  imports: [RouterLink],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopBarComponent {
+  protected readonly currentUser = inject(CurrentUserService);
   protected readonly notificationsOpen = signal(false);
   protected readonly notifications = [
     {
@@ -39,6 +43,10 @@ export class TopBarComponent {
 
     return count > 4 ? '4+' : `${count}`;
   });
+
+  constructor() {
+    this.currentUser.loadCurrentUser().subscribe();
+  }
 
   protected toggleNotifications(): void {
     this.notificationsOpen.update((open) => !open);

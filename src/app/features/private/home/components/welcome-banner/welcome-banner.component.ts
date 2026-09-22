@@ -9,4 +9,5 @@ import { HomeStat } from '../../models/home.models';
 })
 export class WelcomeBannerComponent {
   readonly stats = input.required<HomeStat[]>();
+  readonly displayName = input.required<string>();
 }

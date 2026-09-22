@@ -16,10 +16,24 @@
   <section class="artists-content" appRevealOnScroll>
     <app-genre-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectTab($any($event))" />
 
-    <app-artist-grid
-      [artists]="filteredArtists()"
-      [azMode]="selectedTab() === 'A-Z'"
-      [groupedArtists]="groupedArtists()"
-    />
+    @if (isLoading()) {
+      <section class="artists-status" aria-live="polite">
+        <span></span>
+        Loading artists from Raven API...
+      </section>
+    } @else if (errorMessage()) {
+      <section class="artists-error" aria-live="polite">
+        <span></span>
+        {{ errorMessage() }}
+      </section>
+    }
+
+    @if (!errorMessage()) {
+      <app-artist-grid
+        [artists]="filteredArtists()"
+        [azMode]="selectedTab() === 'A-Z'"
+        [groupedArtists]="groupedArtists()"
+      />
+    }
   </section>
 </main>

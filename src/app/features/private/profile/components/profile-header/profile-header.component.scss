@@ -9,11 +9,17 @@
   padding: clamp(1.25rem, 4vw, 2rem);
 }
 
-img {
+.profile-header__avatar {
+  display: grid;
+  place-items: center;
   width: 7rem;
   aspect-ratio: 1;
   border-radius: 1.5rem;
-  object-fit: cover;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 1.25rem 3rem rgba(109, 40, 217, 0.28);
+  color: var(--text-primary);
+  font-size: 2.6rem;
+  font-weight: 950;
 }
 
 .profile-header__content {
