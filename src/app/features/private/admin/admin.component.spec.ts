@@ -1,0 +1,56 @@
+import { Component, input } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
+import { AdminComponent } from './admin.component';
+import { SidebarComponent } from '../home/components/sidebar/sidebar.component';
+import { TopBarComponent } from '../home/components/top-bar/top-bar.component';
+import { API_BASE_URL } from '../../../core/configs/api.config';
+
+@Component({ selector: 'app-home-top-bar', template: '' }) class TopStub {}
+@Component({ selector: 'app-home-sidebar', template: '' }) class SideStub { readonly items = input<unknown>(); }
+
+describe('Admin console', () => {
+  const base = API_BASE_URL + '/admin';
+  beforeEach(() => TestBed.configureTestingModule({ imports: [AdminComponent], providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()] })
+    .overrideComponent(AdminComponent, { remove: { imports: [SidebarComponent, TopBarComponent] }, add: { imports: [SideStub, TopStub] } }));
+  afterEach(() => TestBed.inject(HttpTestingController).verify());
+
+  async function setup() {
+    const fixture = TestBed.createComponent(AdminComponent);
+    const http = TestBed.inject(HttpTestingController);
+    http.expectOne(base + '/artists?page=0').flush([{ id: 'artist', name: 'Artist', blocked: false }]);
+    http.expectOne(base + '/genres').flush([{ id: 'pop', name: 'Pop' }]);
+    fixture.detectChanges(); await fixture.whenStable();
+    return { fixture, http };
+  }
+
+  it('loads an artist and submits its edited biography with the same artist ID', async () => {
+    const { fixture, http } = await setup();
+    fixture.nativeElement.querySelector('.artist-row').click();
+    http.expectOne(base + '/artists/artist').flush({ artist: { id: 'artist', name: 'Artist', bio: 'Old bio', artistImages: [] }, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges(); await fixture.whenStable();
+    const bio = fixture.nativeElement.querySelector('textarea'); bio.value = 'New bio'; bio.dispatchEvent(new Event('input'));
+    fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    const save = http.expectOne(base + '/artists/artist');
+    expect(save.request.method).toBe('PUT');
+    expect(save.request.body).toEqual({ name: 'Artist', bio: 'New bio', genres: ['pop'] });
+    save.flush({ artist: { id: 'artist', name: 'Artist', bio: 'New bio', artistImages: [] }, blocked: false, genreIds: ['pop'] });
+    http.expectOne(base + '/artists?page=0').flush([]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Artist saved.');
+  });
+
+  it('keeps flag state unchanged when a toggle fails', async () => {
+    const { fixture, http } = await setup();
+    fixture.nativeElement.querySelectorAll('.admin-tabs button')[1].click();
+    http.expectOne(base + '/flags').flush([{ key: 'artist_catalog', description: 'Catalog', enabled: true, updatedAt: '2026-09-22T00:00:00Z' }]);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('[role=switch]').click();
+    const toggle = http.expectOne(base + '/flags/artist_catalog'); expect(toggle.request.body).toEqual({ enabled: false });
+    toggle.flush({}, { status: 500, statusText: 'Error' }); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role=switch]').getAttribute('aria-checked')).toBe('true');
+    expect(fixture.nativeElement.textContent).toContain('Could not update the feature flag.');
+  });
+});

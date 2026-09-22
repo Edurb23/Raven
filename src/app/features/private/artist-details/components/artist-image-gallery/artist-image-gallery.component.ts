@@ -57,8 +57,9 @@ export class ArtistImageGalleryComponent implements OnInit {
             const selected = this.artist().artistImages.find(image => voting.images.some(item => item.id === image.id && item.selected));
             this.selectedPhoto.emit(selected ? this.imagesService.resolveImage([selected]) : this.artist().photo);
           }),
-          catchError(() => {
-            this.error.set(imageId ? 'Could not save your vote. Please try again.' : 'Could not load the weekly votes. Please try again.');
+          catchError(error => {
+            if (error.status === 503) this.voting.set(null);
+            this.error.set(error.status === 503 ? 'Photo voting is temporarily unavailable.' : imageId ? 'Could not save your vote. Please try again.' : 'Could not load the weekly votes. Please try again.');
             return EMPTY;
           }),
           finalize(() => { this.loading.set(false); this.pending.set(null); })

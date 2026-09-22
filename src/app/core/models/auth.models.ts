@@ -14,6 +14,7 @@ export interface TokenResponse {
 }
 
 export interface UserDetailResponse {
+  roles?: string[];
   id: string;
   username: string;
   email: string;

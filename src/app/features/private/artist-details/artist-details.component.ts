@@ -47,7 +47,7 @@ export class ArtistDetailsComponent {
         map((artist): ArtistPageState => ({ artist, loading: false, error: '' })),
         catchError(error => of<ArtistPageState>({
           artist: null, loading: false,
-          error: error.status === 404 ? 'Artist not found.' : 'Unable to load this artist. Please try again.'
+          error: error.status === 404 ? 'Artist not found.' : error.status === 503 ? 'Artist pages are temporarily unavailable.' : 'Unable to load this artist. Please try again.'
         })),
         startWith(loadingState)
       );

@@ -30,8 +30,8 @@
   </div>
 </aside>
 
-<nav class="mobile-nav" aria-label="Raven mobile navigation">
-  @for (item of items().slice(0, 5); track item.label) {
+<nav class="mobile-nav" aria-label="Raven mobile navigation" [style.grid-template-columns]="'repeat(' + mobileItems().length + ', minmax(0, 1fr))'">
+  @for (item of mobileItems(); track item.label) {
     <a class="mobile-nav__link" [class.mobile-nav__link--active]="item.active" [routerLink]="item.route">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path [attr.d]="item.iconPath" />

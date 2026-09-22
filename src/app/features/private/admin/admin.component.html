@@ -1,0 +1,80 @@
+<app-home-sidebar [items]="navigation" />
+<main class="admin-shell">
+  <app-home-top-bar />
+  <header class="admin-heading"><p>Raven / Administration</p><h1>Control room</h1><span>Manage artists, photos and platform features.</span></header>
+  <nav class="admin-tabs" aria-label="Administration sections">
+    <button type="button" [class.active]="tab() === 'artists'" (click)="setTab('artists')">Artists</button>
+    <button type="button" [class.active]="tab() === 'flags'" (click)="setTab('flags')">Feature flags</button>
+    <button type="button" [class.active]="tab() === 'logs'" (click)="setTab('logs')">Logs</button>
+  </nav>
+  @if (error()) { <p class="feedback error" role="alert">{{ error() }}</p> }
+  @if (message()) { <p class="feedback success" role="status">{{ message() }}</p> }
+  @switch (tab()) {
+    @case ('artists') {
+      <div class="artist-workspace">
+        <aside class="panel artist-list">
+          <div class="panel-title"><h2>Artists</h2><button class="primary" type="button" (click)="choose(null)" [disabled]="busy()">+ New</button></div>
+          @for (artist of artists(); track artist.id) {
+            <button type="button" class="artist-row" [class.active]="selected()?.artist?.id === artist.id" (click)="choose(artist.id)" [disabled]="busy()">
+              <span>{{ artist.name }}</span><small [class.blocked]="artist.blocked">{{ artist.blocked ? 'Blocked' : 'Active' }}</small>
+            </button>
+          } @empty { <p>No artists on this page.</p> }
+          <div class="pagination"><button type="button" (click)="loadArtists(artistPage() - 1)" [disabled]="artistPage() === 0">Previous</button><span>{{ artistPage() + 1 }}</span><button type="button" (click)="loadArtists(artistPage() + 1)" [disabled]="artists().length < 30">Next</button></div>
+        </aside>
+        <section class="panel editor">
+          @if (loading()) { <p role="status">Loading artist...</p> }
+          <div class="panel-title"><h2>{{ selected() ? 'Edit artist' : 'Create artist' }}</h2>
+            @if (selected(); as data) { <button class="danger" type="button" (click)="block()" [disabled]="busy()">{{ data.blocked ? 'Unblock artist' : 'Block artist' }}</button> }
+          </div>
+          <form (ngSubmit)="save()">
+            <fieldset [disabled]="busy() || loading()">
+              <label>Name<input name="name" [(ngModel)]="form.name" maxlength="255" required /></label>
+              <label>Biography<textarea name="bio" [(ngModel)]="form.bio" rows="6" required></textarea></label>
+              <label>Genres<select name="genres" [(ngModel)]="form.genres" multiple required>
+                @for (genre of genres(); track genre.id) { <option [ngValue]="genre.id">{{ genre.name }}</option> }
+              </select><small>Use Ctrl / Command to select multiple genres.</small></label>
+              <div class="form-actions"><button class="primary" type="submit">{{ busy() ? 'Saving...' : 'Save artist' }}</button>
+                @if (selected(); as data) { <a [routerLink]="['/app/artists', data.artist.id]">View artist</a> }
+              </div>
+            </fieldset>
+          </form>
+          @if (selected(); as data) {
+            <section class="photo-editor">
+              <div class="panel-title"><div><h2>Photos</h2><small>JPEG, PNG or GIF. Maximum 5 MB.</small></div>
+                <label class="upload">Upload photo<input type="file" accept="image/jpeg,image/png,image/gif" (change)="upload($event)" [disabled]="busy()" /></label>
+              </div>
+              <p class="muted">Manual selection applies immediately. Weekly voting may choose a new photo on Monday.</p>
+              <div class="photo-grid">
+                @for (image of data.artist.artistImages; track image.id) {
+                  <article><img [src]="images.resolveImage([image])" [alt]="data.artist.name + ' photo'" />
+                    <button type="button" (click)="selectPhoto(image.id)" [disabled]="busy() || image.selected">{{ image.selected ? 'Current photo' : 'Set as main photo' }}</button>
+                  </article>
+                } @empty { <p>No photos uploaded yet.</p> }
+              </div>
+            </section>
+          }
+        </section>
+      </div>
+    }
+    @case ('flags') {
+      <section class="panel"><div class="panel-title"><h2>Feature flags</h2><button type="button" (click)="loadFlags()">Refresh</button></div>
+        <p class="muted">Changes apply immediately. Administration remains available when the catalog is disabled.</p>
+        @for (flag of flags(); track flag.key) {
+          <article class="flag"><div><h3>{{ flag.description }}</h3><code>{{ flag.key }}</code><small>Updated {{ flag.updatedAt | date:'medium' }}</small></div>
+            <button type="button" role="switch" [attr.aria-checked]="flag.enabled" [attr.aria-label]="flag.description" [class.enabled]="flag.enabled" (click)="toggle(flag)" [disabled]="busy()">{{ flag.enabled ? 'Enabled' : 'Disabled' }}</button>
+          </article>
+        }
+      </section>
+    }
+    @case ('logs') {
+      <section class="panel"><div class="panel-title"><h2>Request logs</h2><div class="log-actions"><label><input type="checkbox" [(ngModel)]="errorsOnly" (change)="loadLogs(0)" /> Errors only</label><button type="button" (click)="loadLogs()">Refresh</button></div></div>
+        <p class="muted">API activity from this version onward. Passwords, tokens and request bodies are not recorded.</p>
+        <div class="table-scroll"><table><thead><tr><th>Time</th><th>Method / path</th><th>Status</th><th>Duration</th><th>User ID</th></tr></thead><tbody>
+          @for (log of logs(); track log.id) { <tr><td>{{ log.occurredAt | date:'short' }}</td><td><strong>{{ log.method }}</strong> {{ log.path }}</td><td [class.error]="log.status >= 400">{{ log.status }}</td><td>{{ log.durationMs }} ms</td><td>{{ log.actorId || 'Anonymous' }}</td></tr> }
+          @empty { <tr><td colspan="5">No logs found.</td></tr> }
+        </tbody></table></div>
+        <div class="pagination"><button type="button" (click)="loadLogs(logPage() - 1)" [disabled]="logPage() === 0">Previous</button><span>{{ logPage() + 1 }}</span><button type="button" (click)="loadLogs(logPage() + 1)" [disabled]="logs().length < 50">Next</button></div>
+      </section>
+    }
+  }
+</main>

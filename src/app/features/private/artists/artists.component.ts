@@ -73,9 +73,9 @@ export class ArtistsComponent implements OnInit {
         this.errorMessage.set('');
         this.isLoading.set(false);
       },
-      error: () => {
+      error: (error) => {
         this.artists.set([]);
-        this.errorMessage.set('Sorry, we have an internal problem.');
+        this.errorMessage.set(error.status === 503 ? 'The artist catalog is temporarily unavailable.' : 'Sorry, we have an internal problem.');
         this.isLoading.set(false);
       }
     });

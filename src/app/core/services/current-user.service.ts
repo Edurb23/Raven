@@ -13,6 +13,7 @@ export class CurrentUserService {
   private hasLoaded = false;
 
   readonly user = this.userState.asReadonly();
+  readonly isAdmin = computed(() => this.userState()?.roles?.includes('ROLE_ADMIN') ?? false);
   readonly isLoading = this.loadingState.asReadonly();
   readonly errorMessage = this.errorState.asReadonly();
   readonly displayName = computed(() => this.userState()?.username ?? 'Collector');
