@@ -1,12 +1,11 @@
-import { AlbumGenre, AlbumTab } from '../../albums/models/album.models';
+import { AlbumTab } from '../../albums/models/album.models';
 
-export type ArtistGenre = Exclude<AlbumGenre, 'Classical'>;
 export type ArtistTab = Exclude<AlbumTab, 'Classical'>;
 
 export interface CatalogArtist {
   id?: string;
   name: string;
-  genre: ArtistGenre;
+  genres: string[];
   image: string;
   albumCount: number;
   followers: string;

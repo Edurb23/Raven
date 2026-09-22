@@ -1,5 +1,7 @@
 ﻿<app-home-sidebar [items]="navigation" />
-<div class="artist-topbar"><app-home-top-bar /></div>
+@if (isPhotosPage || !state().artist) {
+  <div class="artist-topbar"><app-home-top-bar /></div>
+}
 <main class="artist-shell" [class.artist-shell--photos]="isPhotosPage">
   @if (state().artist; as artist) {
     @if (isPhotosPage) {
@@ -12,7 +14,9 @@
       </header>
       <app-artist-image-gallery class="artist-gallery artist-gallery--page" [artist]="artist" (selectedPhoto)="selectedPhoto.set($event)" />
     } @else {
-      <app-artist-hero [artist]="{ name: artist.name, genres: artist.genres, photo: selectedPhoto() ?? artist.photo, banner: artist.bannerImage ? artist.banner : (selectedPhoto() ?? artist.banner) }" />
+      <app-artist-hero [artist]="{ name: artist.name, genres: artist.genres, photo: selectedPhoto() ?? artist.photo, banner: artist.bannerImage ? artist.banner : (selectedPhoto() ?? artist.banner) }">
+        <div artistHeader class="artist-topbar"><app-home-top-bar /></div>
+      </app-artist-hero>
       <app-artist-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectedTab.set($event)" />
       <div class="artist-layout">
         <section class="artist-layout__main artist-panel">

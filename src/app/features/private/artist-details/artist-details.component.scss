@@ -11,17 +11,14 @@
 }
 
 .artist-topbar {
-  position: absolute;
-  top: 1.25rem;
-  right: 2rem;
-  left: 8.6rem;
+  position: relative;
+  margin-inline: 8.6rem 2rem;
+  padding-top: 1.25rem;
   z-index: 8;
-  pointer-events: none;
 }
 
 .artist-topbar app-home-top-bar {
   display: block;
-  pointer-events: auto;
 }
 
 .artist-shell {
@@ -64,7 +61,7 @@ app-artist-tabs,
 .photos-entry__preview img { width: calc((100% - .9rem) / 3); height: 4.8rem; object-fit: cover; border-radius: .55rem; }
 .photos-entry__footer { margin-top: .8rem; color: var(--text-secondary); font-size: .72rem; }
 .photos-entry__footer > span:last-child { color: #b99afa; font-size: 1.1rem; }
-.artist-shell--photos { padding: 8rem 2rem 4rem 7.5rem; }
+.artist-shell--photos { padding: 2rem 2rem 4rem 7.5rem; }
 .photos-heading, .artist-gallery--page { width: min(100%, 76rem); margin-inline: auto; }
 .photos-back { display: inline-flex; gap: .65rem; align-items: center; color: var(--text-secondary); text-decoration: none; font-size: .85rem; }
 .photos-back:hover { color: var(--text-primary); }
@@ -118,7 +115,7 @@ app-artist-tabs {
 
 .artist-state {
   width: min(100% - 2rem, 60rem);
-  margin: 10rem auto 0;
+  margin: 2rem auto 0;
 }
 
 .section-heading p,
@@ -188,14 +185,16 @@ app-artist-tabs {
   }
 }
 
-@media (max-width: 680px) {
-  .artist-shell--photos { padding: 7rem 1rem 6rem; }
-  .photos-heading, .artist-gallery--page { width: 100%; }
+@media (max-width: 919px) {
   .artist-topbar {
-    top: 0.75rem;
-    right: 1rem;
-    left: 1rem;
+    margin-inline: 1rem;
+    padding-top: 0.75rem;
   }
+}
+
+@media (max-width: 680px) {
+  .artist-shell--photos { padding: 1.5rem 1rem 6rem; }
+  .photos-heading, .artist-gallery--page { width: 100%; }
 
   .artist-shell {
     padding-bottom: 5rem;

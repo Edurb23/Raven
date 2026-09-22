@@ -27,6 +27,7 @@ export class AdminService {
     return this.http.post(this.base + '/artists/' + encodeURIComponent(id) + '/images', data);
   }
   select(id: string, imageId: string) { return this.http.put(this.base + '/artists/' + encodeURIComponent(id) + '/images/' + encodeURIComponent(imageId) + '/select', {}); }
+  removePhoto(id: string, imageId: string) { return this.http.delete(this.base + '/artists/' + encodeURIComponent(id) + '/images/' + encodeURIComponent(imageId)); }
   uploadBanner(id: string, file: File) {
     const data = new FormData(); data.append('file', file);
     return this.http.post(this.base + '/artists/' + encodeURIComponent(id) + '/banner', data);

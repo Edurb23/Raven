@@ -17,7 +17,7 @@
           {{ artist().name }}
         </a>
       </h3>
-      <p>{{ artist().genre }}</p>
+      <p>{{ artist().genres.join(' · ') || 'No genres available' }}</p>
     </div>
     <button type="button">Follow</button>
   </div>

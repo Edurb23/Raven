@@ -48,6 +48,21 @@ describe('ArtistsDataService', () => {
     expect(count).toBe(0);
   });
 
+  it('preserves all API genres instead of replacing unrecognized genres with Indie', () => {
+    let actual: string[][] | undefined;
+    TestBed.inject(ArtistsDataService).listArtists().subscribe(artists => actual = artists.map(item => item.genres));
+    const genres = [['Rap', 'Hip-Hop'], ['Heavy Metal', 'Hard Rock'], ['Funk Carioca', 'Pop'], ['House', 'EDM'], ['Indie Rock']];
+    expectPage(0).flush(genres.map((values, index) => ({ ...artist(String(index)), genres: values })));
+    expect(actual).toEqual(genres);
+  });
+
+  it('keeps missing genres empty instead of inventing a genre', () => {
+    let actual: string[][] | undefined;
+    TestBed.inject(ArtistsDataService).listArtists().subscribe(artists => actual = artists.map(item => item.genres));
+    expectPage(0).flush([{ ...artist('empty'), genres: [] }, { ...artist('missing'), genres: null }]);
+    expect(actual).toEqual([[], []]);
+  });
+
   it('reports later page failures instead of presenting an incomplete catalog', () => {
     const next = vi.fn();
     const error = vi.fn();

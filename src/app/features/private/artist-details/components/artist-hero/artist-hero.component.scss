@@ -1,9 +1,10 @@
 .artist-hero {
-  overflow: hidden;
+  display: flow-root;
   border: 0;
   border-radius: 0;
   background-color: #11111d;
-  background-position: center 34%;
+  background-position: center top;
+  background-repeat: no-repeat;
   background-size: cover;
   box-shadow: none;
 }
@@ -37,15 +38,18 @@
   color: var(--accent);
   font-size: 0.72rem;
   font-weight: 900;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .artist-hero h1 {
   margin-top: 0.3rem;
   max-width: 12ch;
-  font-size: clamp(3.2rem, 8vw, 6.2rem);
-  line-height: 0.94;
-  letter-spacing: 0;
+  font-size: clamp(3.2rem, 7.5vw, 5.7rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.25);
 }
 
 .artist-hero__meta,
@@ -72,7 +76,7 @@
 }
 
 .artist-hero__button {
-  border: 1px solid rgba(148, 163, 184, 0.14);
+  border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 999px;
   background: rgba(11, 11, 18, 0.44);
   color: var(--text-primary);
@@ -93,6 +97,17 @@
 .artist-hero__button--primary {
   border-color: transparent;
   background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 6px 24px rgba(109, 40, 217, 0.2);
+}
+
+.artist-hero__button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artist-hero__button { transition: none; }
+  .artist-hero__button:hover { transform: none; }
 }
 
 @media (min-width: 860px) {

@@ -21,7 +21,7 @@ describe('Admin console', () => {
     const fixture = TestBed.createComponent(AdminComponent);
     const http = TestBed.inject(HttpTestingController);
     http.expectOne(base + '/artists?page=0').flush([{ id: 'artist', name: 'Artist', blocked: false }]);
-    http.expectOne(base + '/genres').flush([{ id: 'pop', name: 'Pop' }]);
+    http.expectOne(base + '/genres').flush([{ id: 'pop', name: 'Pop' }, { id: 'rock', name: 'Rock' }, { id: 'metal', name: 'Metal' }]);
     fixture.detectChanges(); await fixture.whenStable();
     return { fixture, http };
   }
@@ -52,6 +52,64 @@ describe('Admin console', () => {
     toggle.flush({}, { status: 500, statusText: 'Error' }); fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role=switch]').getAttribute('aria-checked')).toBe('true');
     expect(fixture.nativeElement.textContent).toContain('Could not update the feature flag.');
+  });
+
+  it('only deletes a photo after confirmation and refreshes the gallery without losing form edits', async () => {
+    const { fixture, http } = await setup();
+    const artist = { id: 'artist', name: 'Artist', bio: 'Bio', artistImages: [{ id: 'photo', selected: true, urlImage: '/photo.png' }] };
+    fixture.nativeElement.querySelector('.artist-row').click();
+    http.expectOne(base + '/artists/artist').flush({ artist, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges(); await fixture.whenStable();
+    const bio = fixture.nativeElement.querySelector('textarea');
+    bio.value = 'Unsaved biography'; bio.dispatchEvent(new Event('input'));
+    fixture.nativeElement.querySelector('.remove-photo').click(); fixture.detectChanges();
+    http.expectNone(base + '/artists/artist/images/photo');
+    fixture.nativeElement.querySelector('.photo-removal button:last-child').click(); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.photo-removal')).toBeNull();
+    fixture.nativeElement.querySelector('.remove-photo').click(); fixture.detectChanges();
+    fixture.nativeElement.querySelector('.confirm-remove-photo').click();
+    const removal = http.expectOne(base + '/artists/artist/images/photo');
+    expect(removal.request.method).toBe('DELETE'); removal.flush(null);
+    http.expectOne(base + '/artists/artist').flush({ artist: { ...artist, artistImages: [] }, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.photo-grid article')).toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('Photo removed.');
+    expect(bio.value).toBe('Unsaved biography');
+  });
+
+  it('keeps the photo visible when deletion fails', async () => {
+    const { fixture, http } = await setup();
+    fixture.nativeElement.querySelector('.artist-row').click();
+    http.expectOne(base + '/artists/artist').flush({ artist: { id: 'artist', name: 'Artist', bio: 'Bio', artistImages: [{ id: 'photo', selected: true, urlImage: '/photo.png' }] }, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('.remove-photo').click(); fixture.detectChanges();
+    fixture.nativeElement.querySelector('.confirm-remove-photo').click();
+    http.expectOne(base + '/artists/artist/images/photo').flush({}, { status: 500, statusText: 'Error' });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.photo-grid article')).not.toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('Could not remove the photo');
+  });
+
+  it('selects several genres with clicks, preserves hidden selections during search and saves all selected IDs', async () => {
+    const { fixture, http } = await setup();
+    const artist = { id: 'artist', name: 'Artist', bio: 'Bio', artistImages: [] };
+    fixture.nativeElement.querySelector('.artist-row').click();
+    http.expectOne(base + '/artists/artist').flush({ artist, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges(); await fixture.whenStable();
+    const checkboxes = fixture.nativeElement.querySelectorAll('.genre-option input');
+    expect(checkboxes[0].checked).toBe(true);
+    checkboxes[1].click(); fixture.detectChanges();
+    const search = fixture.nativeElement.querySelector('.genre-search input');
+    search.value = 'metal'; search.dispatchEvent(new Event('input')); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('.genre-option').length).toBe(1);
+    fixture.nativeElement.querySelector('.genre-option input').click(); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.genre-picker legend').textContent).toContain('3 selected');
+    fixture.nativeElement.querySelector('[aria-label="Remove Pop"]').click(); fixture.detectChanges();
+    fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    const save = http.expectOne(base + '/artists/artist');
+    expect(save.request.body.genres).toEqual(['rock', 'metal']);
+    save.flush({ artist, blocked: false, genreIds: ['rock', 'metal'] });
+    http.expectOne(base + '/artists?page=0').flush([]);
   });
 
   it('uploads a separate background, shows its quality warning and allows restoring the main photo', async () => {

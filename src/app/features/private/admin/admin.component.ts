@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -24,12 +24,19 @@ export class AdminComponent {
   protected readonly tab = signal<'artists' | 'flags' | 'logs'>('artists');
   protected readonly artists = signal<AdminArtist[]>([]);
   protected readonly genres = signal<GenreOption[]>([]);
+  protected readonly genreQuery = signal('');
+  protected readonly filteredGenres = computed(() => {
+    const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const query = normalize(this.genreQuery().trim());
+    return this.genres().filter(genre => normalize(genre.name).includes(query));
+  });
   protected readonly selected = signal<ArtistEdit | null>(null);
   protected readonly flags = signal<FeatureFlag[]>([]);
   protected readonly logs = signal<AdminLog[]>([]);
   protected readonly busy = signal(false);
   protected readonly loading = signal(false);
   protected readonly bannerDimensions = signal<{ width: number; height: number } | null>(null);
+  protected readonly pendingPhotoRemoval = signal<string | null>(null);
   protected readonly message = signal('');
   protected readonly error = signal('');
   protected readonly artistPage = signal(0);
@@ -40,7 +47,8 @@ export class AdminComponent {
 
   constructor() {
     this.selection.pipe(switchMap(id => {
-      this.selected.set(null); this.bannerDimensions.set(null); this.form = { name: '', bio: '', genres: [] };
+      this.selected.set(null); this.bannerDimensions.set(null); this.genreQuery.set(''); this.form = { name: '', bio: '', genres: [] };
+      this.pendingPhotoRemoval.set(null);
       this.error.set(''); this.message.set('');
       if (!id) return EMPTY;
       this.loading.set(true);
@@ -54,6 +62,10 @@ export class AdminComponent {
     this.form = { name: data.artist.name, bio: data.artist.bio, genres: [...data.genreIds] };
   }
   protected choose(id: string | null) { if (!this.busy()) this.selection.next(id); }
+  protected setGenre(id: string, checked: boolean) {
+    if (this.busy() || this.loading()) return;
+    this.form.genres = checked ? [...new Set([...this.form.genres, id])] : this.form.genres.filter(genreId => genreId !== id);
+  }
   protected setTab(tab: 'artists' | 'flags' | 'logs') {
     this.tab.set(tab); this.error.set(''); this.message.set('');
     if (tab === 'flags') this.loadFlags();
@@ -111,6 +123,16 @@ export class AdminComponent {
     this.api.select(selected.artist.id, imageId).pipe(switchMap(() => this.api.artist(selected.artist.id)),
       finalize(() => this.busy.set(false)), takeUntilDestroyed(this.destroy)).subscribe({
         next: data => { this.selected.set(data); this.message.set('Main photo updated.'); }, error: () => this.error.set('Could not change the main photo.')
+      });
+  }
+  protected removePhoto(imageId: string) {
+    const selected = this.selected();
+    if (!selected || this.busy() || this.pendingPhotoRemoval() !== imageId) return;
+    this.busy.set(true); this.error.set(''); this.message.set('');
+    this.api.removePhoto(selected.artist.id, imageId).pipe(switchMap(() => this.api.artist(selected.artist.id)),
+      finalize(() => this.busy.set(false)), takeUntilDestroyed(this.destroy)).subscribe({
+        next: data => { this.selected.set(data); this.pendingPhotoRemoval.set(null); this.bannerDimensions.set(null); this.message.set('Photo removed.'); },
+        error: () => this.error.set('Could not remove the photo or refresh the gallery. Reload the artist before trying again.')
       });
   }
   protected loadFlags() {

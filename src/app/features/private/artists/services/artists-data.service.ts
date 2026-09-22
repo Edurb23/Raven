@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { EMPTY, expand, map, reduce } from 'rxjs';
 import { API_BASE_URL } from '../../../../core/configs/api.config';
 import { ARTIST_TABS } from '../mock/artists.mock-data';
-import { ApiArtistImage, ApiArtistListItem, ArtistGenre, CatalogArtist } from '../models/artist.models';
+import { ApiArtistImage, ApiArtistListItem, CatalogArtist } from '../models/artist.models';
 
 @Injectable({ providedIn: 'root' })
 export class ArtistsDataService {
@@ -25,25 +25,16 @@ export class ArtistsDataService {
   }
 
   private toCatalogArtist(artist: ApiArtistListItem): CatalogArtist {
-    const genre = this.resolveGenre(artist.genres);
-
     return {
       id: artist.idd,
       name: artist.name,
-      genre,
+      genres: artist.genres ?? [],
       image: this.resolveImage(artist.artistImages),
       albumCount: 0,
       followers: 'New',
-      latestRelease: artist.bio || 'Discography coming soon',
+      latestRelease: artist.bio || '',
       topAlbums: []
     };
-  }
-
-  private resolveGenre(genres: string[]): ArtistGenre {
-    const primaryGenre = genres?.[0] ?? 'Indie';
-    const supported = this.tabs.filter((tab) => tab !== 'All' && tab !== 'A-Z');
-
-    return (supported.includes(primaryGenre as ArtistGenre) ? primaryGenre : 'Indie') as ArtistGenre;
   }
 
   resolveImage(images: ApiArtistImage[]): string {

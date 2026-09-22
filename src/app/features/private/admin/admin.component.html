@@ -30,9 +30,30 @@
             <fieldset [disabled]="busy() || loading()">
               <label>Name<input name="name" [(ngModel)]="form.name" maxlength="255" required /></label>
               <label>Biography<textarea name="bio" [(ngModel)]="form.bio" rows="6" required></textarea></label>
-              <label>Genres<select name="genres" [(ngModel)]="form.genres" multiple required>
-                @for (genre of genres(); track genre.id) { <option [ngValue]="genre.id">{{ genre.name }}</option> }
-              </select><small>Use Ctrl / Command to select multiple genres.</small></label>
+              <fieldset class="genre-picker" aria-describedby="genre-help">
+                <legend>Genres <span aria-live="polite">{{ form.genres.length }} selected</span></legend>
+                <label class="genre-search">Search genres
+                  <input type="search" placeholder="Search genres..." [value]="genreQuery()" (input)="genreQuery.set($any($event.target).value)" />
+                </label>
+                @if (form.genres.length) {
+                  <div class="selected-genres" aria-label="Selected genres">
+                    @for (genre of genres(); track genre.id) {
+                      @if (form.genres.includes(genre.id)) {
+                        <button type="button" (click)="setGenre(genre.id, false)" [attr.aria-label]="'Remove ' + genre.name">{{ genre.name }} <span aria-hidden="true">×</span></button>
+                      }
+                    }
+                  </div>
+                }
+                <div class="genre-options">
+                  @for (genre of filteredGenres(); track genre.id) {
+                    <label class="genre-option" [class.is-selected]="form.genres.includes(genre.id)">
+                      <input type="checkbox" [checked]="form.genres.includes(genre.id)" (change)="setGenre(genre.id, $any($event.target).checked)" />
+                      <span>{{ genre.name }}</span>
+                    </label>
+                  } @empty { <p class="muted">No genres found.</p> }
+                </div>
+                <small id="genre-help">Select one or more genres. Click again to deselect.</small>
+              </fieldset>
               <div class="form-actions"><button class="primary" type="submit">{{ busy() ? 'Saving...' : 'Save artist' }}</button>
                 @if (selected(); as data) { <a [routerLink]="['/app/artists', data.artist.id]">View artist</a> }
               </div>
@@ -65,6 +86,16 @@
                 @for (image of data.artist.artistImages; track image.id) {
                   <article><img [src]="images.resolveImage([image])" [alt]="data.artist.name + ' photo'" />
                     <button type="button" (click)="selectPhoto(image.id)" [disabled]="busy() || image.selected">{{ image.selected ? 'Current photo' : 'Set as main photo' }}</button>
+                    @if (pendingPhotoRemoval() === image.id) {
+                      <div class="photo-removal" role="group" aria-label="Confirm photo removal">
+                        <p>Remove this photo and its votes?</p>
+                        @if (image.selected) { <p>{{ data.artist.artistImages.length > 1 ? 'The oldest remaining photo will become the main photo.' : 'The artist will have no gallery photo until a new one is uploaded.' }}</p> }
+                        <button class="danger confirm-remove-photo" type="button" (click)="removePhoto(image.id)" [disabled]="busy()">Confirm removal</button>
+                        <button type="button" (click)="pendingPhotoRemoval.set(null)" [disabled]="busy()">Cancel</button>
+                      </div>
+                    } @else {
+                      <button class="danger remove-photo" type="button" (click)="pendingPhotoRemoval.set(image.id)" [disabled]="busy()">Remove photo</button>
+                    }
                   </article>
                 } @empty { <p>No photos uploaded yet.</p> }
               </div>

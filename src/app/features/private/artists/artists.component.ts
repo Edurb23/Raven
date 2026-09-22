@@ -43,11 +43,12 @@ export class ArtistsComponent implements OnInit {
     const selected = this.selectedTab();
 
     return this.artists().filter((artist) => {
-      const matchesTab = selected === 'All' || selected === 'A-Z' || artist.genre === selected;
+      const matchesTab = selected === 'All' || selected === 'A-Z' ||
+        artist.genres.some(genre => genre.toLowerCase() === selected.toLowerCase());
       const matchesSearch =
         !query ||
         artist.name.toLowerCase().includes(query) ||
-        artist.genre.toLowerCase().includes(query) ||
+        artist.genres.some(genre => genre.toLowerCase().includes(query)) ||
         artist.latestRelease.toLowerCase().includes(query);
 
       return matchesTab && matchesSearch;
