@@ -23,6 +23,8 @@ input:not([type=checkbox]):not([type=file]),textarea,select { width:100%; paddin
 textarea { resize:vertical; }select { min-height:8rem; }option { padding:.3rem; }
 .form-actions { display:flex; align-items:center; gap:1rem; }a { color:#b99afa; font-size:.8rem; }
 .photo-editor { border-top:1px solid rgba(148,163,184,.12); margin-top:2rem; padding-top:1.4rem; }
+.banner-preview { display:block; width:100%; aspect-ratio:8 / 3; object-fit:cover; object-position:center 34%; border-radius:.7rem; background:#0b0b13; }
+.quality-warning { color:#fcd34d; font-size:.8rem; line-height:1.6; }
 .upload { position:relative; overflow:hidden; }.upload input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; }
 .upload:focus-within { outline:2px solid #a78bfa; }
 .photo-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(125px,1fr)); gap:.8rem; }.photo-grid article { overflow:hidden; border:1px solid rgba(148,163,184,.12); border-radius:.7rem; }

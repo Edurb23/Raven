@@ -29,6 +29,7 @@ export class AdminComponent {
   protected readonly logs = signal<AdminLog[]>([]);
   protected readonly busy = signal(false);
   protected readonly loading = signal(false);
+  protected readonly bannerDimensions = signal<{ width: number; height: number } | null>(null);
   protected readonly message = signal('');
   protected readonly error = signal('');
   protected readonly artistPage = signal(0);
@@ -39,7 +40,7 @@ export class AdminComponent {
 
   constructor() {
     this.selection.pipe(switchMap(id => {
-      this.selected.set(null); this.form = { name: '', bio: '', genres: [] };
+      this.selected.set(null); this.bannerDimensions.set(null); this.form = { name: '', bio: '', genres: [] };
       this.error.set(''); this.message.set('');
       if (!id) return EMPTY;
       this.loading.set(true);
@@ -80,14 +81,28 @@ export class AdminComponent {
       error: () => this.error.set('Could not change artist status.')
     });
   }
-  protected upload(event: Event) {
+  protected upload(event: Event, background = false) {
     const input = event.target as HTMLInputElement; const file = input.files?.[0]; const selected = this.selected();
     input.value = ''; if (!file || !selected || this.busy()) return;
     if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type) || file.size > 5 * 1024 * 1024) { this.error.set('Choose a JPEG, PNG or GIF up to 5 MB.'); return; }
     this.busy.set(true); this.error.set('');
-    this.api.upload(selected.artist.id, file).pipe(switchMap(() => this.api.artist(selected.artist.id)),
+    const request = background ? this.api.uploadBanner(selected.artist.id, file) : this.api.upload(selected.artist.id, file);
+    request.pipe(switchMap(() => this.api.artist(selected.artist.id)),
       finalize(() => this.busy.set(false)), takeUntilDestroyed(this.destroy)).subscribe({
-        next: data => { this.selected.set(data); this.message.set('Photo uploaded.'); }, error: () => this.error.set('Could not upload the photo. Check whether photo uploads are enabled.')
+        next: data => { this.selected.set(data); this.message.set(background ? 'Background updated.' : 'Photo uploaded.'); }, error: () => this.error.set('Could not upload the image. Check whether photo uploads are enabled.')
+      });
+  }
+  protected readBannerDimensions(event: Event) {
+    const image = event.target as HTMLImageElement;
+    this.bannerDimensions.set({ width: image.naturalWidth, height: image.naturalHeight });
+  }
+  protected removeBanner() {
+    const selected = this.selected(); if (!selected || this.busy()) return;
+    this.busy.set(true); this.error.set(''); this.message.set('');
+    this.api.removeBanner(selected.artist.id).pipe(switchMap(() => this.api.artist(selected.artist.id)),
+      finalize(() => this.busy.set(false)), takeUntilDestroyed(this.destroy)).subscribe({
+        next: data => { this.selected.set(data); this.bannerDimensions.set(null); this.message.set('Background reset to the main photo.'); },
+        error: () => this.error.set('Could not reset the background.')
       });
   }
   protected selectPhoto(imageId: string) {

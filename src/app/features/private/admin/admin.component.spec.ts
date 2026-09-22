@@ -53,4 +53,34 @@ describe('Admin console', () => {
     expect(fixture.nativeElement.querySelector('[role=switch]').getAttribute('aria-checked')).toBe('true');
     expect(fixture.nativeElement.textContent).toContain('Could not update the feature flag.');
   });
+
+  it('uploads a separate background, shows its quality warning and allows restoring the main photo', async () => {
+    const { fixture, http } = await setup();
+    const artist = { id: 'artist', name: 'Artist', bio: 'Bio', artistImages: [] };
+    fixture.nativeElement.querySelector('.artist-row').click();
+    http.expectOne(base + '/artists/artist').flush({ artist, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges(); await fixture.whenStable();
+    const input = fixture.nativeElement.querySelector('.banner-editor input');
+    const file = new File(['test upload'], 'banner.png', { type: 'image/png' });
+    Object.defineProperty(input, 'files', { value: [file] });
+    input.dispatchEvent(new Event('change'));
+    const upload = http.expectOne(base + '/artists/artist/banner');
+    expect(upload.request.method).toBe('POST');
+    expect(upload.request.body.get('file')).toBe(file);
+    upload.flush({});
+    http.expectOne(base + '/artists/artist').flush({ artist: { ...artist, bannerImage: 'iVBORw0KGgo=' }, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('2560 × 960 px');
+    const preview = fixture.nativeElement.querySelector('.banner-preview');
+    Object.defineProperty(preview, 'naturalWidth', { value: 640 });
+    Object.defineProperty(preview, 'naturalHeight', { value: 240 });
+    preview.dispatchEvent(new Event('load')); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.quality-warning')).not.toBeNull();
+    fixture.nativeElement.querySelector('.banner-editor button').click();
+    const remove = http.expectOne(base + '/artists/artist/banner');
+    expect(remove.request.method).toBe('DELETE'); remove.flush(null);
+    http.expectOne(base + '/artists/artist').flush({ artist, blocked: false, genreIds: ['pop'] });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Background reset to the main photo.');
+  });
 });

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { EMPTY, expand, map, reduce } from 'rxjs';
 import { API_BASE_URL } from '../../../../core/configs/api.config';
 import { ARTIST_TABS } from '../mock/artists.mock-data';
 import { ApiArtistImage, ApiArtistListItem, ArtistGenre, CatalogArtist } from '../models/artist.models';
@@ -12,9 +12,16 @@ export class ArtistsDataService {
   readonly tabs = ARTIST_TABS;
 
   listArtists() {
-    return this.http
-      .get<ApiArtistListItem[]>(`${API_BASE_URL}/artist`)
-      .pipe(map((artists) => artists.map((artist) => this.toCatalogArtist(artist))));
+    const pageSize = 20;
+    const loadPage = (page: number) => this.http.get<ApiArtistListItem[]>(`${API_BASE_URL}/artist`, {
+      params: { page, size: pageSize, sort: ['name,asc', 'id,asc'] }
+    });
+
+    return loadPage(0).pipe(
+      expand((artists, page) => artists.length === pageSize ? loadPage(page + 1) : EMPTY),
+      reduce((all, page) => all.concat(page), [] as ApiArtistListItem[]),
+      map((artists) => artists.map((artist) => this.toCatalogArtist(artist)))
+    );
   }
 
   private toCatalogArtist(artist: ApiArtistListItem): CatalogArtist {
@@ -42,7 +49,11 @@ export class ArtistsDataService {
   resolveImage(images: ApiArtistImage[]): string {
     const available = images?.filter((image) => image.urlImage?.trim());
     const selected = available?.find((image) => image.selected) ?? available?.[0];
-    const image = selected?.urlImage.trim();
+    return this.resolveImageSource(selected?.urlImage);
+  }
+
+  resolveImageSource(source: string | null | undefined): string {
+    const image = source?.trim();
 
     if (!image) {
       return '';

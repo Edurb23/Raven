@@ -8,6 +8,7 @@ import { ArtistDetailTab } from '../models/artist-details.models';
 
 export interface ApiArtistDetail extends Omit<ApiArtistListItem, 'idd'> {
   id: string;
+  bannerImage?: string | null;
 }
 export interface ArtistPage extends ApiArtistDetail {
   photo: string;
@@ -39,7 +40,8 @@ export class ArtistDetailsDataService {
     return this.http.get<ApiArtistDetail>(API_BASE_URL + '/artist/' + encodeURIComponent(id)).pipe(
       map((artist): ArtistPage => {
         const photo = this.artists.resolveImage(artist.artistImages);
-        return { ...artist, genres: artist.genres ?? [], photo, banner: photo };
+        const banner = artist.bannerImage ? this.artists.resolveImageSource(artist.bannerImage) : photo;
+        return { ...artist, genres: artist.genres ?? [], photo, banner };
       })
     );
   }

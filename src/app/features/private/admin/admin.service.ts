@@ -27,6 +27,11 @@ export class AdminService {
     return this.http.post(this.base + '/artists/' + encodeURIComponent(id) + '/images', data);
   }
   select(id: string, imageId: string) { return this.http.put(this.base + '/artists/' + encodeURIComponent(id) + '/images/' + encodeURIComponent(imageId) + '/select', {}); }
+  uploadBanner(id: string, file: File) {
+    const data = new FormData(); data.append('file', file);
+    return this.http.post(this.base + '/artists/' + encodeURIComponent(id) + '/banner', data);
+  }
+  removeBanner(id: string) { return this.http.delete(this.base + '/artists/' + encodeURIComponent(id) + '/banner'); }
   flags() { return this.http.get<FeatureFlag[]>(this.base + '/flags'); }
   toggle(key: string, enabled: boolean) { return this.http.put<FeatureFlag[]>(this.base + '/flags/' + encodeURIComponent(key), { enabled }); }
   logs(page: number, errorsOnly: boolean) { return this.http.get<AdminLog[]>(this.base + '/logs', { params: { page, errorsOnly } }); }

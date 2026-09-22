@@ -39,6 +39,23 @@
             </fieldset>
           </form>
           @if (selected(); as data) {
+            <section class="photo-editor banner-editor" aria-labelledby="banner-title">
+              <div class="panel-title">
+                <h2 id="banner-title">Artist background</h2>
+                <label class="upload">Upload background<input type="file" accept="image/jpeg,image/png,image/gif" (change)="upload($event, true)" [disabled]="busy()" /></label>
+              </div>
+              <p class="muted">Recommended: <strong>2560 × 960 px</strong> (8:3 landscape). Aim for at least 1920 × 720 px. JPEG, PNG or GIF, up to 5 MB.</p>
+              <p class="muted">Use a sharp original image; enlarging a small photo does not add detail. Keep the artist near the center, as the edges are cropped on smaller screens.</p>
+              @if (images.resolveImageSource(data.artist.bannerImage) || images.resolveImage(data.artist.artistImages); as preview) {
+                <img class="banner-preview" [src]="preview" [alt]="data.artist.name + ' background preview'" (load)="readBannerDimensions($event)" />
+                @if (bannerDimensions(); as size) {
+                  <p class="muted">Current image: {{ size.width }} × {{ size.height }} px.</p>
+                  @if (size.width < 1920 || size.height < 720) { <p class="quality-warning">This image may look blurry when enlarged. Upload a higher-resolution landscape image.</p> }
+                }
+              }
+              <p class="muted">{{ data.artist.bannerImage ? 'Custom background. Weekly voting only changes the main photo.' : 'Using the main photo until a custom background is uploaded.' }}</p>
+              @if (data.artist.bannerImage) { <button type="button" (click)="removeBanner()" [disabled]="busy()">Use main photo as background</button> }
+            </section>
             <section class="photo-editor">
               <div class="panel-title"><div><h2>Photos</h2><small>JPEG, PNG or GIF. Maximum 5 MB.</small></div>
                 <label class="upload">Upload photo<input type="file" accept="image/jpeg,image/png,image/gif" (change)="upload($event)" [disabled]="busy()" /></label>

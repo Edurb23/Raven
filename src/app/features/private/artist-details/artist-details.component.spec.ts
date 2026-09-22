@@ -1,4 +1,6 @@
 import { Component, input, output } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ArtistHeroComponent } from './components/artist-hero/artist-hero.component';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
@@ -72,6 +74,20 @@ describe('Artist details routing', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Artist not found.');
     expect(fixture.nativeElement.querySelector('app-artist-hero')).toBeNull();
+  });
+
+  it('uses the custom background separately from the main photo', () => {
+    const fixture = TestBed.createComponent(ArtistDetailsComponent);
+    fixture.detectChanges();
+    http.expectOne(`${API_BASE_URL}/artist/ariana-id`).flush({
+      id: 'ariana-id', name: 'Ariana Grande', genres: [], bio: '',
+      bannerImage: 'iVBORw0KGgo=',
+      artistImages: [{ selected: true, urlImage: '/9j/2Q==' }]
+    });
+    fixture.detectChanges();
+    const hero = fixture.debugElement.query(By.directive(ArtistHeroComponent)).componentInstance as ArtistHeroComponent;
+    expect(hero.artist().banner).toBe('data:image/png;base64,iVBORw0KGgo=');
+    expect(hero.artist().photo).toBe('data:image/jpeg;base64,/9j/2Q==');
   });
 
   it('shows the gallery on the dedicated photos route without the full artist hero', () => {

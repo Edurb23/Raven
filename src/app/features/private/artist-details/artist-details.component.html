@@ -12,7 +12,7 @@
       </header>
       <app-artist-image-gallery class="artist-gallery artist-gallery--page" [artist]="artist" (selectedPhoto)="selectedPhoto.set($event)" />
     } @else {
-      <app-artist-hero [artist]="{ name: artist.name, genres: artist.genres, photo: selectedPhoto() ?? artist.photo, banner: selectedPhoto() ?? artist.banner }" />
+      <app-artist-hero [artist]="{ name: artist.name, genres: artist.genres, photo: selectedPhoto() ?? artist.photo, banner: artist.bannerImage ? artist.banner : (selectedPhoto() ?? artist.banner) }" />
       <app-artist-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectedTab.set($event)" />
       <div class="artist-layout">
         <section class="artist-layout__main artist-panel">
