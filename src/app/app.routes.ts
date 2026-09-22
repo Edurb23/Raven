@@ -51,6 +51,14 @@ export const routes: Routes = [
       )
   },
   {
+    path: 'app/artists/:id/photos',
+    data: { view: 'photos' },
+    loadComponent: () =>
+      import('./features/private/artist-details/artist-details.component').then(
+        (component) => component.ArtistDetailsComponent
+      )
+  },
+  {
     path: 'app/artists/:id',
     loadComponent: () =>
       import('./features/private/artist-details/artist-details.component').then(

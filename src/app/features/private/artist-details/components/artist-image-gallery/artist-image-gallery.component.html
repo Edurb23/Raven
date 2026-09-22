@@ -1,0 +1,83 @@
+﻿<section class="gallery" aria-label="Artist photos and weekly voting">
+  @if (activePhoto(); as photo) {
+    <div class="viewer" tabindex="0" aria-label="Photo viewer. Use left and right arrow keys to browse."
+      (keydown.arrowleft)="$event.preventDefault(); movePhoto(-1)"
+      (keydown.arrowright)="$event.preventDefault(); movePhoto(1)">
+      <header class="viewer__heading">
+        <h2>Photo <strong>{{ activeIndex() + 1 }}</strong> <span>of {{ photos().length }}</span></h2>
+        @if (photo.current) { <span class="current-badge"><i aria-hidden="true"></i> Current photo</span> }
+      </header>
+      <div class="stage" aria-live="polite">
+        @if (photo.src && !failedImages().has(photo.id)) {
+          <img class="stage__image" [src]="photo.src" [alt]="artist().name + ' — photo ' + (activeIndex() + 1)" (error)="imageFailed(photo.id)" />
+        } @else {
+          <p class="unavailable">Photo unavailable</p>
+        }
+        @if (photos().length > 1) {
+          <button class="arrow arrow--previous" type="button" aria-label="Previous photo" (click)="movePhoto(-1)">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
+          </button>
+          <button class="arrow arrow--next" type="button" aria-label="Next photo" (click)="movePhoto(1)">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m10 5 7 7-7 7" /></svg>
+          </button>
+        }
+      </div>
+      <div class="filmstrip" aria-label="Choose a photo">
+        @for (item of photos(); track item.id; let index = $index) {
+          <button class="thumbnail" type="button" [attr.data-photo-index]="index"
+            [class.thumbnail--active]="index === activeIndex()" [attr.aria-current]="index === activeIndex() ? 'true' : null"
+            [attr.aria-label]="'View photo ' + (index + 1)" (click)="selectPhoto(index)">
+            @if (item.src && !failedImages().has(item.id)) {
+              <img [src]="item.src" alt="" loading="lazy" (error)="imageFailed(item.id)" />
+            } @else { <span>{{ index + 1 }}</span> }
+            @if (voting()?.votedImageId === item.id) { <span class="thumbnail__vote" aria-label="Your vote">&#10003;</span> }
+          </button>
+        }
+      </div>
+    </div>
+    <aside class="voting-panel" aria-labelledby="voting-title">
+      <p class="eyebrow"><span aria-hidden="true">&#10022;</span> Community choice</p>
+      <h2 id="voting-title">Next week's<br />main photo.</h2>
+      <p class="intro">Your favorite deserves the spotlight.</p>
+      <div class="vote-count">
+        <strong>{{ voting() ? photo.votes : '—' }}</strong>
+        <span>{{ photo.votes === 1 ? 'vote for this photo' : 'votes for this photo' }}</span>
+      </div>
+      @if (voting()) {
+        <div class="vote-share" aria-hidden="true"><span [style.width.%]="totalVotes() ? photo.votes / totalVotes() * 100 : 0"></span></div>
+        <p class="vote-total">{{ totalVotes() }} votes this week</p>
+      }
+      <button class="vote" type="button" (click)="vote(photo.id)" [attr.aria-pressed]="voting()?.votedImageId === photo.id"
+        [disabled]="!!pending() || !voting() || voting()?.votedImageId === photo.id || !photo.src || failedImages().has(photo.id)">
+        @if (pending() === photo.id) { Saving... }
+        @else if (voting()?.votedImageId === photo.id) { <span aria-hidden="true">&#10003;</span> Your vote }
+        @else { Vote for this photo <span aria-hidden="true">&#8599;</span> }
+      </button>
+      @if (loading()) { <p class="feedback" role="status">Loading weekly votes...</p> }
+      @if (error()) {
+        <div class="error feedback" role="alert">{{ error() }} <button type="button" (click)="retry()" [disabled]="!!pending()">Retry</button></div>
+      }
+      @if (notice()) { <p class="feedback" role="status">{{ notice() }}</p> }
+      <div class="round-info">
+        <p>One vote. Your choice.</p>
+        <span>You can change your vote until Sunday. The winner becomes the main photo on Monday.</span>
+        @if (voting(); as round) {
+          <div class="deadline">
+            <span>Voting closes</span>
+            <strong>{{ closingTime() }}</strong>
+            <small>{{ round.timezone === 'America/Sao_Paulo' ? 'São Paulo time' : round.timezone }}</small>
+          </div>
+        }
+      </div>
+      <details class="rules">
+        <summary>How it works</summary>
+        <p>One vote per user, per artist, each week. Ties favor the current photo, then the oldest upload. Without votes, the current photo stays.</p>
+      </details>
+    </aside>
+  } @else {
+    <div class="empty">
+      <h2>No photos yet</h2>
+      <p>This artist's photo collection is still empty.</p>
+    </div>
+  }
+</section>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
@@ -7,9 +7,17 @@ import { BehaviorSubject } from 'rxjs';
 import { ArtistDetailsComponent } from './artist-details.component';
 import { TopBarComponent } from '../home/components/top-bar/top-bar.component';
 import { API_BASE_URL } from '../../../core/configs/api.config';
+import { ArtistImageGalleryComponent } from './components/artist-image-gallery/artist-image-gallery.component';
+import { ArtistPage } from './services/artist-details-data.service';
 
 @Component({ selector: 'app-home-top-bar', template: '' })
 class TopBarStub {}
+
+@Component({ selector: 'app-artist-image-gallery', template: '' })
+class GalleryStub {
+  readonly artist = input.required<ArtistPage>();
+  readonly selectedPhoto = output<string>();
+}
 
 describe('Artist details routing', () => {
   let params: BehaviorSubject<ReturnType<typeof convertToParamMap>>;
@@ -22,7 +30,7 @@ describe('Artist details routing', () => {
       providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting(),
         { provide: ActivatedRoute, useValue: { paramMap: params } }]
     }).overrideComponent(ArtistDetailsComponent, {
-      remove: { imports: [TopBarComponent] }, add: { imports: [TopBarStub] }
+      remove: { imports: [TopBarComponent, ArtistImageGalleryComponent] }, add: { imports: [TopBarStub, GalleryStub] }
     });
     http = TestBed.inject(HttpTestingController);
   });
@@ -41,6 +49,8 @@ describe('Artist details routing', () => {
     expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Ariana Grande');
     expect(fixture.nativeElement.textContent).toContain('Ariana biography');
     expect(fixture.nativeElement.textContent).not.toContain('Kendrick');
+    expect(fixture.nativeElement.querySelector('app-artist-image-gallery')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.photos-entry').getAttribute('href')).toBe('/app/artists/ariana-id/photos');
     expect(fixture.nativeElement.querySelector('.artist-hero__photo').getAttribute('src'))
       .toBe('data:image/jpeg;base64,/9j/2Q==');
 
@@ -62,5 +72,19 @@ describe('Artist details routing', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Artist not found.');
     expect(fixture.nativeElement.querySelector('app-artist-hero')).toBeNull();
+  });
+
+  it('shows the gallery on the dedicated photos route without the full artist hero', () => {
+    const route = TestBed.inject(ActivatedRoute);
+    Object.defineProperty(route, 'snapshot', { value: { data: { view: 'photos' } } });
+    const fixture = TestBed.createComponent(ArtistDetailsComponent);
+    fixture.detectChanges();
+    http.expectOne(`${API_BASE_URL}/artist/ariana-id`).flush({
+      id: 'ariana-id', name: 'Ariana Grande', genres: ['Pop'], bio: '', artistImages: []
+    });
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('app-artist-hero')).toBeNull();
+    expect(fixture.nativeElement.querySelector('app-artist-image-gallery')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('.photos-back').getAttribute('href')).toBe('/app/artists/ariana-id');
   });
 });

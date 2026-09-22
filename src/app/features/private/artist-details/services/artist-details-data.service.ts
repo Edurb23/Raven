@@ -13,11 +13,27 @@ export interface ArtistPage extends ApiArtistDetail {
   photo: string;
   banner: string;
 }
+export interface ArtistImageVoting {
+  weekStart: string;
+  closesAt: string;
+  timezone: string;
+  votedImageId: string | null;
+  images: { id: string; votes: number; selected: boolean }[];
+}
 @Injectable({ providedIn: 'root' })
 export class ArtistDetailsDataService {
   private readonly http = inject(HttpClient);
   private readonly artists = inject(ArtistsDataService);
   readonly tabs: ArtistDetailTab[] = ['Overview', 'Albums', 'Community', 'News', 'Reviews', 'About'];
+
+  getImageVoting(id: string) {
+    return this.http.get<ArtistImageVoting>(API_BASE_URL + '/artist/' + encodeURIComponent(id) + '/images/votes');
+  }
+
+  voteForImage(artistId: string, imageId: string) {
+    return this.http.put<ArtistImageVoting>(API_BASE_URL + '/artist/' + encodeURIComponent(artistId)
+      + '/images/' + encodeURIComponent(imageId) + '/vote', {});
+  }
 
   getArtist(id: string) {
     return this.http.get<ApiArtistDetail>(API_BASE_URL + '/artist/' + encodeURIComponent(id)).pipe(

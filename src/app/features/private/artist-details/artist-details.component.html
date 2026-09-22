@@ -1,34 +1,64 @@
 ﻿<app-home-sidebar [items]="navigation" />
 <div class="artist-topbar"><app-home-top-bar /></div>
-<main class="artist-shell">
+<main class="artist-shell" [class.artist-shell--photos]="isPhotosPage">
   @if (state().artist; as artist) {
-    <app-artist-hero [artist]="artist" />
-    <app-artist-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectedTab.set($event)" />
-    <div class="artist-layout">
-      <section class="artist-layout__main artist-panel">
-        @if (selectedTab() === 'Overview' || selectedTab() === 'About') {
-          <div class="section-heading">
-            <p>Biography</p>
-            <h2>About {{ artist.name }}</h2>
-          </div>
-          <p class="artist-biography">{{ artist.bio || 'No biography available yet.' }}</p>
-        } @else {
-          <div class="section-heading"><h2>{{ selectedTab() }}</h2></div>
-          <p>{{ selectedTab() }} information is not available yet.</p>
-        }
-      </section>
-      <aside class="artist-layout__side artist-panel">
-        <div class="section-heading"><p>Genres</p></div>
-        <div class="artist-genres">
-          @for (genre of artist.genres; track genre) {
-            <span>{{ genre }}</span>
-          } @empty {
-            <span>No genres available yet.</span>
+    @if (isPhotosPage) {
+      <header class="photos-heading">
+        <a class="photos-back" [routerLink]="['/app/artists', artist.id]">
+          <span aria-hidden="true">&#8592;</span> {{ artist.name }}
+        </a>
+        <p class="photos-heading__eyebrow">Photo collection</p>
+        <h1>{{ artist.name }} <span>/ Photos</span></h1>
+      </header>
+      <app-artist-image-gallery class="artist-gallery artist-gallery--page" [artist]="artist" (selectedPhoto)="selectedPhoto.set($event)" />
+    } @else {
+      <app-artist-hero [artist]="{ name: artist.name, genres: artist.genres, photo: selectedPhoto() ?? artist.photo, banner: selectedPhoto() ?? artist.banner }" />
+      <app-artist-tabs [tabs]="tabs" [selected]="selectedTab()" (selectedChange)="selectedTab.set($event)" />
+      <div class="artist-layout">
+        <section class="artist-layout__main artist-panel">
+          @if (selectedTab() === 'Overview' || selectedTab() === 'About') {
+            <div class="section-heading">
+              <p>Biography</p>
+              <h2>About {{ artist.name }}</h2>
+            </div>
+            <p class="artist-biography">{{ artist.bio || 'No biography available yet.' }}</p>
+          } @else {
+            <div class="section-heading"><h2>{{ selectedTab() }}</h2></div>
+            <p>{{ selectedTab() }} information is not available yet.</p>
           }
-        </div>
-        <a routerLink="/app/artists">Back to artists</a>
-      </aside>
-    </div>
+        </section>
+        <aside class="artist-layout__side">
+          <section class="artist-panel">
+            <div class="section-heading"><p>Genres</p></div>
+            <div class="artist-genres">
+              @for (genre of artist.genres; track genre) {
+                <span>{{ genre }}</span>
+              } @empty {
+                <span>No genres available yet.</span>
+              }
+            </div>
+            <a routerLink="/app/artists">Back to artists</a>
+          </section>
+          <a class="photos-entry" [routerLink]="['/app/artists', artist.id, 'photos']">
+            <div class="photos-entry__heading">
+              <span>Photos</span>
+              <span class="photos-entry__count">{{ artist.artistImages.length }}</span>
+            </div>
+            @if (photoPreviews().length) {
+              <div class="photos-entry__preview" aria-hidden="true">
+                @for (photo of photoPreviews(); track photo.id) {
+                  <img [src]="photo.src" alt="" loading="lazy" />
+                }
+              </div>
+            }
+            <div class="photos-entry__footer">
+              <span>View photos &amp; vote</span>
+              <span aria-hidden="true">&#8599;</span>
+            </div>
+          </a>
+        </aside>
+      </div>
+    }
   } @else {
     <section class="artist-state artist-panel" aria-live="polite">
       @if (state().loading) {

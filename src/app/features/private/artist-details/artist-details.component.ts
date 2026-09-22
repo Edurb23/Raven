@@ -1,4 +1,4 @@
-﻿import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, distinctUntilChanged, map, of, startWith, switchMap } from 'rxjs';
@@ -9,6 +9,8 @@ import { ArtistHeroComponent } from './components/artist-hero/artist-hero.compon
 import { ArtistTabsComponent } from './components/artist-tabs/artist-tabs.component';
 import { ArtistDetailTab } from './models/artist-details.models';
 import { ArtistDetailsDataService, ArtistPage } from './services/artist-details-data.service';
+import { ArtistImageGalleryComponent } from './components/artist-image-gallery/artist-image-gallery.component';
+import { ArtistsDataService } from '../artists/services/artists-data.service';
 
 interface ArtistPageState {
   artist: ArtistPage | null;
@@ -19,7 +21,7 @@ const loadingState: ArtistPageState = { artist: null, loading: true, error: '' }
 
 @Component({
   selector: 'app-artist-details',
-  imports: [SidebarComponent, TopBarComponent, ArtistHeroComponent, ArtistTabsComponent, RouterLink],
+  imports: [SidebarComponent, TopBarComponent, ArtistHeroComponent, ArtistTabsComponent, ArtistImageGalleryComponent, RouterLink],
   templateUrl: './artist-details.component.html',
   styleUrl: './artist-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -27,14 +29,20 @@ const loadingState: ArtistPageState = { artist: null, loading: true, error: '' }
 export class ArtistDetailsComponent {
   private readonly artistData = inject(ArtistDetailsDataService);
   private readonly route = inject(ActivatedRoute);
+  private readonly images = inject(ArtistsDataService);
+  protected readonly isPhotosPage = this.route.snapshot?.data?.['view'] === 'photos';
+  protected readonly photoPreviews = computed(() => (this.state().artist?.artistImages ?? []).slice(0, 3)
+    .map(image => ({ id: image.id, src: this.images.resolveImage([image]) })));
   protected readonly tabs = this.artistData.tabs;
   protected readonly selectedTab = signal<ArtistDetailTab>('Overview');
+  protected readonly selectedPhoto = signal<string | null>(null);
   protected readonly navigation = HOME_NAVIGATION.map(item => ({ ...item, active: item.label === 'Artists' }));
   protected readonly state = toSignal(this.route.paramMap.pipe(
     map(params => params.get('id') ?? ''),
     distinctUntilChanged(),
     switchMap(id => {
       this.selectedTab.set('Overview');
+      this.selectedPhoto.set(null);
       return this.artistData.getArtist(id).pipe(
         map((artist): ArtistPageState => ({ artist, loading: false, error: '' })),
         catchError(error => of<ArtistPageState>({

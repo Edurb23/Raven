@@ -36,10 +36,41 @@ app-artist-hero {
 }
 
 app-artist-tabs,
+.artist-gallery,
 .artist-layout {
   width: min(100% - 2rem, 68rem);
   margin-inline: auto;
 }
+
+.artist-gallery { display: block; margin-top: 1.5rem; }
+
+.artist-layout__side { display: grid; gap: 1rem; }
+.photos-entry {
+  display: block;
+  padding: 1.1rem;
+  border: 1px solid rgba(148, 163, 184, .12);
+  border-radius: 1.15rem;
+  color: var(--text-primary);
+  background: rgba(22, 22, 37, .5);
+  text-decoration: none;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+.photos-entry:hover { border-color: rgba(167, 139, 250, .45); background: rgba(38, 28, 57, .65); }
+.photos-entry:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.photos-entry__heading, .photos-entry__footer { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.photos-entry__heading { font-size: .85rem; font-weight: 800; }
+.photos-entry__count { padding: .2rem .45rem; border-radius: .4rem; background: rgba(139, 92, 246, .12); color: #b99afa; font-size: .68rem; }
+.photos-entry__preview { display: flex; gap: .45rem; margin-top: .85rem; overflow: hidden; }
+.photos-entry__preview img { width: calc((100% - .9rem) / 3); height: 4.8rem; object-fit: cover; border-radius: .55rem; }
+.photos-entry__footer { margin-top: .8rem; color: var(--text-secondary); font-size: .72rem; }
+.photos-entry__footer > span:last-child { color: #b99afa; font-size: 1.1rem; }
+.artist-shell--photos { padding: 8rem 2rem 4rem 7.5rem; }
+.photos-heading, .artist-gallery--page { width: min(100%, 76rem); margin-inline: auto; }
+.photos-back { display: inline-flex; gap: .65rem; align-items: center; color: var(--text-secondary); text-decoration: none; font-size: .85rem; }
+.photos-back:hover { color: var(--text-primary); }
+.photos-heading__eyebrow { margin: 2rem 0 .6rem; color: #b99afa; font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+.photos-heading h1 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.3rem); letter-spacing: -.035em; }
+.photos-heading h1 span { color: var(--text-secondary); font-weight: 400; }
 
 app-artist-tabs {
   display: block;
@@ -158,6 +189,8 @@ app-artist-tabs {
 }
 
 @media (max-width: 680px) {
+  .artist-shell--photos { padding: 7rem 1rem 6rem; }
+  .photos-heading, .artist-gallery--page { width: 100%; }
   .artist-topbar {
     top: 0.75rem;
     right: 1rem;
